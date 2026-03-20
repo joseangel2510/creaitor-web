@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creaitor Studio — Tu Contenido Debería Vender Por Ti</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+@keyframes marquee {
+0% { transform: translateX(0%); }
+100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+animation: marquee 20s linear infinite;
+display: flex;
+width: max-content;
+}
+.animate-marquee:hover {
+animation-play-state: paused;
+}
+.mask-edges {
+mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.hide-scrollbar::-webkit-scrollbar {
+display: none;
+}
+.hide-scrollbar {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+.reveal {
+opacity: 0;
+transform: translateY(30px);
+transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+.reveal-line {
+opacity: 0;
+transform: translateY(20px);
+transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal-line.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* Intro splash */
+#splash {
+position: fixed;
+inset: 0;
+z-index: 9999;
+background: #09090b;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#splash.done {
+opacity: 0;
+visibility: hidden;
+}
+#splash-text {
+font-size: clamp(2.5rem, 8vw, 6rem);
+font-weight: 500;
+letter-spacing: -0.04em;
+color: #e4e4e7;
+overflow: hidden;
+display: flex;
+}
+#splash-text span {
+display: inline-block;
+opacity: 0;
+transform: translateY(20px);
+animation: letterIn 0.4s ease forwards;
+}
+#splash-text span.ai {
+color: #fbbf24;
+}
+@keyframes letterIn {
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+body.loading {
+overflow: hidden;
+}
+
+/* Custom cursor trail */
+.cursor-dot {
+position: fixed;
+pointer-events: none;
+z-index: 9998;
+border-radius: 50%;
+mix-blend-mode: difference;
+transition: opacity 0.3s ease;
+}
+.cursor-main {
+width: 8px;
+height: 8px;
+background: #fbbf24;
+transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
+}
+.cursor-trail {
+width: 32px;
+height: 32px;
+border: 1.5px solid rgba(251,191,36,0.5);
+transition: transform 0.08s ease;
+}
+body:has(a:hover) .cursor-main,
+body:has(button:hover) .cursor-main {
+transform: scale(2.5);
+background: rgba(251,191,36,0.6);
+}
+body:has(a:hover) .cursor-trail,
+body:has(button:hover) .cursor-trail {
+transform: scale(1.6);
+border-color: rgba(251,191,36,0.8);
+}
+@media (pointer: coarse) {
+.cursor-dot { display: none; }
+}
+
+/* Service card animations */
+@keyframes cursor-blink {
+0%, 100% { opacity: 1; }
+50% { opacity: 0; }
+}
+.animate-cursor-blink {
+animation: cursor-blink 1s step-end infinite;
+}
+@keyframes pulse-ring {
+0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
+70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+}
+.animate-pulse-ring {
+animation: pulse-ring 2s ease-out infinite;
+}
+.service-bar {
+transform: scaleY(0);
+transform-origin: bottom;
+transition: transform 0.6s ease;
+}
+.group:hover .service-bar {
+transform: scaleY(1);
+}
+</style>
+</head>
+<body class="bg-zinc-50 text-zinc-900 font-sans antialiased min-h-screen flex flex-col relative selection:bg-zinc-200 selection:text-black loading overflow-x-hidden">
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot cursor-main" id="cursor-main"></div>
+    <div class="cursor-dot cursor-trail" id="cursor-trail"></div>
+
+    <!-- Intro Splash -->
+    <div id="splash">
+        <div id="splash-text"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header id="main-nav" class="fixed top-0 left-0 right-0 z-40 px-4 py-3 flex justify-center pointer-events-none transition-all duration-500">
+        <nav class="w-full max-w-5xl pointer-events-auto bg-white/70 backdrop-blur-xl border border-zinc-200/60 rounded-2xl shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06)] px-5 py-2.5 flex items-center justify-between transition-all duration-500" id="nav-bar">
+            <!-- Logo -->
+            <a href="#" class="flex items-start text-zinc-900 shrink-0">
+                <span class="text-xl tracking-tighter font-medium">CRE<span class="text-amber-400">AI</span>TOR</span>
+                <span class="text-[9px] font-medium ml-0.5 mt-0.5">MEDIA</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center gap-1">
+                <a href="#servicios" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-zinc-900 px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Servicios</a>
+                <a href="#proceso" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-zinc-900 px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Proceso</a>
+                <a href="#portfolio" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-zinc-900 px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Portfolio</a>
+                <a href="#pricing" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-zinc-900 px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Planes</a>
+            </div>
+
+            <!-- CTA Button -->
+            <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="cta-nav-btn relative group shrink-0">
+                <span class="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 opacity-60 blur-md group-hover:opacity-90 group-hover:blur-lg transition-all duration-500 animate-pulse"></span>
+                <span class="relative flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white text-[13px] font-medium px-5 py-2 rounded-full transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(251,191,36,0.3)]">
+                    <span class="hidden sm:inline">Agendar Llamada</span>
+                    <span class="sm:hidden">Agendar</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                </span>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="md:hidden ml-2 w-9 h-9 flex items-center justify-center rounded-xl bg-zinc-100/80 hover:bg-zinc-200/80 transition-colors">
+                <iconify-icon icon="solar:hamburger-menu-linear" class="text-lg text-zinc-700" id="menu-icon-open"></iconify-icon>
+                <iconify-icon icon="solar:close-circle-linear" class="text-lg text-zinc-700 hidden" id="menu-icon-close"></iconify-icon>
+            </button>
+        </nav>
+
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="pointer-events-auto hidden md:hidden absolute top-full left-4 right-4 mt-2 bg-white/90 backdrop-blur-xl border border-zinc-200/60 rounded-2xl shadow-[0_8px_32px_-4px_rgba(0,0,0,0.1)] p-4 flex flex-col gap-1 transition-all duration-300">
+            <a href="#servicios" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Servicios</a>
+            <a href="#proceso" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Proceso</a>
+            <a href="#portfolio" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Portfolio</a>
+            <a href="#pricing" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Planes</a>
+            <div class="border-t border-zinc-200/50 mt-2 pt-3">
+                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="flex items-center justify-center gap-2 bg-zinc-900 text-white text-sm font-medium px-5 py-3 rounded-xl hover:bg-zinc-800 transition-colors">
+                    Agendar Llamada
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center w-full">
+
+        <!-- SECCIÓN 1: HERO -->
+        <section class="relative w-full max-w-6xl px-6 pt-24 pb-16 md:pt-40 md:pb-28 flex flex-col items-center text-center overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute -right-20 -top-20 opacity-40 pointer-events-none -z-10 blur-3xl">
+                <img src="https://framerusercontent.com/images/922LPrLT3JS7JXQbJxraBeoo8I.png" alt="" class="w-[800px] h-auto object-cover">
+            </div>
+
+            <!-- Scrolling Pills -->
+            <div class="w-full max-w-lg mb-8 overflow-hidden mask-edges">
+                <div class="animate-marquee gap-3 py-2">
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Video Marketing</span>
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Automatización IA</span>
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Embudos de Venta</span>
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Contenido que Convierte</span>
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Estrategia Digital</span>
+                    <!-- Duplicate for infinite scroll -->
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Video Marketing</span>
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Automatización IA</span>
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Embudos de Venta</span>
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Contenido que Convierte</span>
+                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Estrategia Digital</span>
+                </div>
+            </div>
+
+            <div class="relative max-w-3xl flex flex-col items-center">
+                <p class="text-xs font-medium tracking-widest uppercase text-zinc-400 mb-6">Creaitor Studio</p>
+                <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tight leading-[1.1] mb-6 text-zinc-900">
+                    Tu contenido debería <span class="italic text-zinc-500">vender</span> por ti.
+                </h1>
+                <p class="text-lg md:text-xl font-normal text-zinc-500 mb-10 max-w-lg leading-relaxed">
+                    Transformamos tu presencia digital en un sistema de ventas predecible y escalable.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                    <a href="#pricing" class="w-full sm:w-auto bg-zinc-900 hover:bg-zinc-800 text-white transition-colors rounded-full py-4 px-8 text-base font-medium flex justify-center items-center">
+                        Ver Planes
+                    </a>
+                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="w-full sm:w-auto bg-white border border-zinc-200 hover:border-zinc-300 transition-colors rounded-full p-1.5 pr-6 flex items-center gap-3 shadow-sm group">
+                        <img src="brand_assets/llamada.JPEG" alt="Founder" class="w-10 h-10 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+                        <div class="flex flex-col items-start justify-center">
+                            <span class="text-sm font-medium text-zinc-900">Agenda una asesoría gratuita</span>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                                <span class="text-xs font-medium text-zinc-400">Disponible ahora</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: FEATURE STEPS — TU CAMINO -->
+        <section class="w-full bg-zinc-900 text-white py-24 md:py-32 px-6" id="feature-steps">
+            <div class="max-w-7xl mx-auto w-full">
+                <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-14 text-center text-zinc-100">
+                    Tu Camino Hacia Resultados <span class="italic text-zinc-500">Reales</span>
+                </h2>
+
+                <div class="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12">
+                    <!-- Steps List -->
+                    <div class="order-2 md:order-1 space-y-6">
+                        <!-- Step 1 -->
+                        <div class="feature-step flex items-start gap-6 md:gap-8 cursor-pointer transition-opacity duration-500 opacity-30" data-step="0">
+                            <div class="feature-step-circle w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center border-2 border-zinc-600 bg-zinc-800 shrink-0 transition-all duration-500">
+                                <span class="text-base md:text-lg font-medium text-zinc-400 transition-colors duration-500">1</span>
+                            </div>
+                            <div class="flex-1 pt-1">
+                                <h3 class="text-xl md:text-2xl font-medium tracking-tight text-zinc-100 mb-1">Diagnóstico Estratégico</h3>
+                                <p class="text-sm md:text-base font-normal text-zinc-400 leading-relaxed">Analizamos tu marca, tu mercado y tu contenido actual. Identificamos exactamente dónde está tu oportunidad de crecimiento.</p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="feature-step flex items-start gap-6 md:gap-8 cursor-pointer transition-opacity duration-500 opacity-30" data-step="1">
+                            <div class="feature-step-circle w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center border-2 border-zinc-600 bg-zinc-800 shrink-0 transition-all duration-500">
+                                <span class="text-base md:text-lg font-medium text-zinc-400 transition-colors duration-500">2</span>
+                            </div>
+                            <div class="flex-1 pt-1">
+                                <h3 class="text-xl md:text-2xl font-medium tracking-tight text-zinc-100 mb-1">Producción + Automatización IA</h3>
+                                <p class="text-sm md:text-base font-normal text-zinc-400 leading-relaxed">Producimos tus videos con calidad cinematográfica y configuramos chatbots, DMs automáticos y captación de leads que trabajan 24/7.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="feature-step flex items-start gap-6 md:gap-8 cursor-pointer transition-opacity duration-500 opacity-30" data-step="2">
+                            <div class="feature-step-circle w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center border-2 border-zinc-600 bg-zinc-800 shrink-0 transition-all duration-500">
+                                <span class="text-base md:text-lg font-medium text-zinc-400 transition-colors duration-500">3</span>
+                            </div>
+                            <div class="flex-1 pt-1">
+                                <h3 class="text-xl md:text-2xl font-medium tracking-tight text-zinc-100 mb-1">Escalar y Convertir</h3>
+                                <p class="text-sm md:text-base font-normal text-zinc-400 leading-relaxed">Tu contenido genera leads, tu sistema los nutre y tú solo te dedicas a cerrar. Más ventas, menos esfuerzo, crecimiento compuesto.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Carousel -->
+                    <div class="order-1 md:order-2 relative h-[220px] md:h-[320px] lg:h-[400px] overflow-hidden rounded-2xl bg-zinc-800">
+                        <div class="feature-slide absolute inset-0 rounded-2xl overflow-hidden transition-all duration-500" data-slide="0" style="opacity:0; transform: translateY(40px);">
+                            <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1000&h=600&fit=crop" alt="Video production" class="w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent"></div>
+                        </div>
+                        <div class="feature-slide absolute inset-0 rounded-2xl overflow-hidden transition-all duration-500" data-slide="1" style="opacity:0; transform: translateY(40px);">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&h=600&fit=crop" alt="AI automation dashboard" class="w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent"></div>
+                        </div>
+                        <div class="feature-slide absolute inset-0 rounded-2xl overflow-hidden transition-all duration-500" data-slide="2" style="opacity:0; transform: translateY(40px);">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1000&h=600&fit=crop" alt="Business growth analytics" class="w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent"></div>
+                        </div>
+                        <!-- Progress bar -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-zinc-700/50 z-10">
+                            <div id="feature-progress" class="h-full bg-amber-400 transition-none" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof -->
+        <section class="w-full max-w-6xl px-6 py-12 flex flex-col md:flex-row items-center gap-8 overflow-hidden border-t border-zinc-200/50">
+            <p class="text-sm font-medium text-zinc-400 whitespace-nowrap">Marcas que ya confían en nosotros</p>
+            <div class="flex-grow w-full overflow-hidden mask-edges">
+                <div class="animate-marquee gap-16 py-2 items-center flex opacity-60 grayscale">
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">TechStartup</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">FitBrand</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">EduPro</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">FinanceMax</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">StyleCo</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">MediaHub</span>
+                    <!-- Duplicates -->
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">TechStartup</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">FitBrand</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">EduPro</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">FinanceMax</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">StyleCo</span>
+                    <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">MediaHub</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: SERVICIOS -->
+        <section id="servicios" class="w-full max-w-7xl px-6 py-24 md:py-32 flex flex-col items-center">
+            <div class="mb-16 flex flex-col items-center text-center reveal">
+                <span class="bg-white border border-zinc-200 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full mb-6 shadow-sm">Servicios</span>
+                <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900 max-w-2xl">
+                    Todo lo que necesitas para <span class="italic text-zinc-500">dominar</span> el mercado digital.
+                </h2>
+            </div>
+
+            <!-- Row 1: 2 Hero Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mb-6">
+
+                <!-- 1. Creación de Contenido en Video -->
+                <div class="bg-white rounded-3xl p-8 border border-zinc-100 shadow-sm flex flex-col justify-end min-h-[360px] md:min-h-[420px] relative overflow-hidden group reveal">
+                    <div class="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-zinc-50/80 to-transparent flex items-center justify-center p-6 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        <!-- Phone mockup -->
+                        <div class="relative scale-95 group-hover:scale-100 transition-transform duration-500">
+                            <div class="w-[140px] h-[200px] bg-zinc-900 rounded-[20px] p-2 shadow-xl relative overflow-hidden">
+                                <div class="w-full h-full rounded-[14px] bg-gradient-to-br from-amber-400/30 via-zinc-800 to-zinc-900 flex items-center justify-center relative">
+                                    <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                        <iconify-icon icon="solar:play-bold" class="text-xl text-white ml-0.5"></iconify-icon>
+                                    </div>
+                                    <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                                        <div class="flex gap-1">
+                                            <div class="h-0.5 w-8 bg-amber-400 rounded-full"></div>
+                                            <div class="h-0.5 w-4 bg-white/30 rounded-full"></div>
+                                        </div>
+                                        <span class="text-[8px] text-white/70 font-medium">0:15</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Floating platform badges -->
+                            <div class="absolute -top-2 -right-8 bg-white rounded-full p-2 shadow-md border border-zinc-100 group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform duration-500">
+                                <iconify-icon icon="mdi:youtube" class="text-lg text-red-500"></iconify-icon>
+                            </div>
+                            <div class="absolute top-12 -left-10 bg-white rounded-full p-2 shadow-md border border-zinc-100 group-hover:-translate-x-2 transition-transform duration-500" style="transition-delay: 0.1s;">
+                                <iconify-icon icon="mdi:instagram" class="text-lg text-pink-500"></iconify-icon>
+                            </div>
+                            <div class="absolute -bottom-2 -right-6 bg-white rounded-full p-2 shadow-md border border-zinc-100 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-500" style="transition-delay: 0.15s;">
+                                <iconify-icon icon="ic:baseline-tiktok" class="text-lg text-zinc-900"></iconify-icon>
+                            </div>
+                            <!-- Views stat -->
+                            <div class="absolute -bottom-1 -left-12 bg-white rounded-xl px-3 py-1.5 shadow-md border border-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="transition-delay: 0.2s;">
+                                <span class="text-[10px] font-medium text-zinc-900">+12.4K views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 mt-auto">
+                        <span class="text-xs font-medium text-amber-500 mb-2 block">01</span>
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Creación de Contenido en Video</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Reels, shorts, TikToks, testimonios y cápsulas educativas optimizados para atraer leads y generar autoridad de marca.</p>
+                    </div>
+                </div>
+
+                <!-- 3. Funnels de Venta -->
+                <div class="bg-white rounded-3xl p-8 border border-zinc-100 shadow-sm flex flex-col justify-end min-h-[360px] md:min-h-[420px] relative overflow-hidden group reveal" style="transition-delay: 0.1s;">
+                    <div class="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-zinc-50/80 to-transparent flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="relative flex flex-col items-center justify-center gap-2.5">
+                            <div class="w-56 h-9 bg-white rounded-xl border border-zinc-200 shadow-sm flex items-center justify-between px-4 text-[10px] font-medium text-zinc-600 group-hover:scale-105 transition-transform duration-500">
+                                <span>Tráfico Orgánico</span>
+                                <span class="text-zinc-400">100%</span>
+                            </div>
+                            <div class="w-44 h-9 bg-white rounded-xl border border-zinc-200 shadow-sm flex items-center justify-between px-4 text-[10px] font-medium text-zinc-600 group-hover:scale-105 transition-transform duration-500" style="transition-delay: 0.08s;">
+                                <span>Landing + Lead Magnet</span>
+                                <span class="text-zinc-400">62%</span>
+                            </div>
+                            <div class="w-36 h-9 bg-white rounded-xl border border-zinc-200 shadow-sm flex items-center justify-between px-4 text-[10px] font-medium text-zinc-600 group-hover:scale-105 transition-transform duration-500" style="transition-delay: 0.16s;">
+                                <span>Email Nurturing</span>
+                                <span class="text-zinc-400">38%</span>
+                            </div>
+                            <div class="w-28 h-9 bg-zinc-900 rounded-xl shadow-md flex items-center justify-center gap-2 text-[10px] font-medium text-white group-hover:scale-105 transition-transform duration-500" style="transition-delay: 0.24s;">
+                                <iconify-icon icon="solar:check-circle-bold" class="text-amber-400"></iconify-icon>
+                                <span>Venta</span>
+                            </div>
+                            <!-- A/B badge -->
+                            <div class="absolute -right-8 top-8 bg-amber-400 text-zinc-900 rounded-lg px-2 py-1 text-[9px] font-bold shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 rotate-3" style="transition-delay: 0.3s;">A/B</div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 mt-auto">
+                        <span class="text-xs font-medium text-amber-500 mb-2 block">02</span>
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Funnels de Venta & Productos Digitales</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Embudos full-stack: landing SEO, lead magnets, email nurturing, upsells y A/B testing continuo para maximizar ingresos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2: 3 Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mb-6">
+
+                <!-- 2. Estrategia Digital & Planificación -->
+                <div class="bg-white rounded-3xl p-8 border border-zinc-100 shadow-sm flex flex-col justify-end min-h-[320px] md:min-h-[380px] relative overflow-hidden group reveal" style="transition-delay: 0.15s;">
+                    <div class="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-zinc-50/80 to-transparent flex items-center justify-center p-6 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="bg-white border border-zinc-200 rounded-2xl p-4 shadow-sm w-full max-w-[200px] transform rotate-[-2deg] group-hover:rotate-0 transition-transform duration-500">
+                            <!-- Mini calendar -->
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[10px] font-bold text-zinc-900">Marzo 2026</span>
+                                <span class="bg-amber-400 text-zinc-900 text-[8px] font-bold px-2 py-0.5 rounded-full">Plan</span>
+                            </div>
+                            <div class="grid grid-cols-5 gap-1 text-[8px] text-zinc-400 font-medium mb-1.5 text-center">
+                                <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span>
+                            </div>
+                            <div class="grid grid-cols-5 gap-1">
+                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-amber-400 transition-colors duration-300" style="transition-delay: 0.1s;"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-900 group-hover:bg-zinc-800 transition-colors duration-300"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
+                                <div class="w-5 h-5 rounded-md bg-amber-400"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-zinc-900 transition-colors duration-300" style="transition-delay: 0.2s;"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
+                                <div class="w-5 h-5 rounded-md bg-amber-400"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-amber-400 transition-colors duration-300" style="transition-delay: 0.3s;"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-900"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-zinc-900 transition-colors duration-300" style="transition-delay: 0.15s;"></div>
+                                <div class="w-5 h-5 rounded-md bg-amber-400"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 mt-auto">
+                        <span class="text-xs font-medium text-amber-500 mb-2 block">03</span>
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Estrategia Digital & Planificación</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Calendario editorial, posicionamiento visual y emocional de marca, y guías de venta en redes para cerrar más tratos.</p>
+                    </div>
+                </div>
+
+                <!-- 4. Análisis de Mercado & Benchmarking -->
+                <div class="bg-white rounded-3xl p-8 border border-zinc-100 shadow-sm flex flex-col justify-end min-h-[320px] md:min-h-[380px] relative overflow-hidden group reveal" style="transition-delay: 0.25s;">
+                    <div class="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-zinc-50/80 to-transparent flex items-end justify-center pb-4 px-8 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="flex items-end gap-3 h-32 relative">
+                            <!-- Competitor bars -->
+                            <div class="flex flex-col items-center gap-1">
+                                <div class="w-8 bg-zinc-200 rounded-t-lg service-bar" style="height: 40px; transition-delay: 0.1s;"></div>
+                                <span class="text-[8px] text-zinc-400">Comp.</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1">
+                                <div class="w-8 bg-zinc-200 rounded-t-lg service-bar" style="height: 55px; transition-delay: 0.2s;"></div>
+                                <span class="text-[8px] text-zinc-400">Comp.</span>
+                            </div>
+                            <!-- Your bar (amber, tallest) -->
+                            <div class="flex flex-col items-center gap-1">
+                                <div class="w-10 bg-amber-400 rounded-t-lg service-bar shadow-lg shadow-amber-400/30" style="height: 90px; transition-delay: 0.3s;"></div>
+                                <span class="text-[8px] font-bold text-zinc-900">Tú</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1">
+                                <div class="w-8 bg-zinc-200 rounded-t-lg service-bar" style="height: 35px; transition-delay: 0.4s;"></div>
+                                <span class="text-[8px] text-zinc-400">Comp.</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1">
+                                <div class="w-8 bg-zinc-200 rounded-t-lg service-bar" style="height: 48px; transition-delay: 0.5s;"></div>
+                                <span class="text-[8px] text-zinc-400">Comp.</span>
+                            </div>
+                            <!-- Magnifying glass -->
+                            <div class="absolute -top-2 -right-4 bg-white rounded-full p-2 shadow-md border border-zinc-100 scale-90 group-hover:scale-110 transition-transform duration-500">
+                                <iconify-icon icon="solar:magnifer-bold" class="text-base text-zinc-600"></iconify-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 mt-auto">
+                        <span class="text-xs font-medium text-amber-500 mb-2 block">04</span>
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Análisis de Mercado & Benchmarking</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Investigamos a tu competencia: formatos, hashtags y tendencias. Reporte accionable con oportunidades de diferenciación.</p>
+                    </div>
+                </div>
+
+                <!-- 5. Diseño Gráfico & Branding -->
+                <div class="bg-white rounded-3xl p-8 border border-zinc-100 shadow-sm flex flex-col justify-end min-h-[320px] md:min-h-[380px] relative overflow-hidden group reveal" style="transition-delay: 0.35s;">
+                    <div class="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-zinc-50/80 to-transparent flex items-center justify-center p-6 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        <!-- Fanned cards -->
+                        <div class="relative w-48 h-36 flex items-center justify-center">
+                            <div class="absolute w-32 h-40 bg-gradient-to-br from-zinc-200 to-zinc-100 rounded-2xl border border-zinc-200 shadow-sm transform -rotate-6 -translate-x-4 group-hover:-rotate-12 group-hover:-translate-x-8 transition-transform duration-500 p-3">
+                                <div class="w-full h-16 rounded-lg bg-gradient-to-br from-zinc-300 to-zinc-200 mb-2"></div>
+                                <div class="h-1.5 w-3/4 bg-zinc-300 rounded-full mb-1"></div>
+                                <div class="h-1.5 w-1/2 bg-zinc-300 rounded-full"></div>
+                            </div>
+                            <div class="absolute w-32 h-40 bg-gradient-to-br from-amber-100 to-amber-50 rounded-2xl border border-amber-200/60 shadow-sm transform rotate-0 z-10 group-hover:-translate-y-2 transition-transform duration-500 p-3" style="transition-delay: 0.05s;">
+                                <div class="w-full h-16 rounded-lg bg-gradient-to-br from-amber-300 to-amber-200 mb-2"></div>
+                                <div class="h-1.5 w-3/4 bg-amber-300 rounded-full mb-1"></div>
+                                <div class="h-1.5 w-1/2 bg-amber-300 rounded-full"></div>
+                            </div>
+                            <div class="absolute w-32 h-40 bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-2xl shadow-md transform rotate-6 translate-x-4 group-hover:rotate-12 group-hover:translate-x-8 transition-transform duration-500 p-3" style="transition-delay: 0.1s;">
+                                <div class="w-full h-16 rounded-lg bg-gradient-to-br from-zinc-700 to-zinc-600 mb-2"></div>
+                                <div class="h-1.5 w-3/4 bg-zinc-600 rounded-full mb-1"></div>
+                                <div class="h-1.5 w-1/2 bg-zinc-600 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 mt-auto">
+                        <span class="text-xs font-medium text-amber-500 mb-2 block">05</span>
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Diseño Gráfico & Branding</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Carruseles, thumbnails, flyers y branding visual coherente que refuerza la confianza de compradores.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 3: 3 Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+
+                <!-- 6. Copywriting Persuasivo -->
+                <div class="bg-white rounded-3xl p-8 border border-zinc-100 shadow-sm flex flex-col justify-end min-h-[320px] md:min-h-[380px] relative overflow-hidden group reveal" style="transition-delay: 0.3s;">
+                    <div class="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-zinc-50/80 to-transparent flex items-center justify-center p-6 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="bg-white border border-zinc-200 rounded-2xl p-5 shadow-sm w-full max-w-[200px]">
+                            <!-- Text lines -->
+                            <div class="flex flex-col gap-2.5 mb-4">
+                                <div class="h-2 w-full bg-zinc-100 rounded-full group-hover:w-[90%] transition-all duration-500"></div>
+                                <div class="h-2 w-[85%] bg-zinc-100 rounded-full group-hover:w-[80%] transition-all duration-500" style="transition-delay: 0.05s;"></div>
+                                <div class="relative">
+                                    <div class="h-2 w-[70%] bg-amber-400/30 rounded-full"></div>
+                                    <div class="absolute inset-y-0 left-0 h-2 w-[70%] bg-amber-400 rounded-full scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700" style="transition-delay: 0.1s;"></div>
+                                </div>
+                                <div class="h-2 w-[60%] bg-zinc-100 rounded-full group-hover:w-[75%] transition-all duration-500" style="transition-delay: 0.15s;"></div>
+                            </div>
+                            <!-- Blinking cursor -->
+                            <div class="flex items-center gap-1 mb-3">
+                                <div class="h-2 w-[40%] bg-zinc-100 rounded-full"></div>
+                                <div class="w-0.5 h-3 bg-zinc-900 animate-cursor-blink"></div>
+                            </div>
+                            <!-- Mini CTA -->
+                            <div class="bg-zinc-900 rounded-full py-1.5 px-4 text-center">
+                                <span class="text-[9px] font-medium text-white">Comprar Ahora →</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 mt-auto">
+                        <span class="text-xs font-medium text-amber-500 mb-2 block">06</span>
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Copywriting Persuasivo</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Guiones de video, captions y mensajes de venta con SEO y técnicas de neuroventa que convierten seguidores en clientes.</p>
+                    </div>
+                </div>
+
+                <!-- 7. Automatización con IA & CRM -->
+                <div class="bg-white rounded-3xl p-8 border border-zinc-100 shadow-sm flex flex-col justify-end min-h-[320px] md:min-h-[380px] relative overflow-hidden group reveal" style="transition-delay: 0.4s;">
+                    <div class="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-zinc-50/80 to-transparent flex flex-col items-center justify-center gap-3 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="flex flex-col gap-2 w-[150%] transform translate-x-[10%] group-hover:translate-x-[5%] transition-transform duration-700 ease-out">
+                            <div class="flex gap-2 text-[10px] font-medium text-zinc-600">
+                                <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">Chatbots IA</span>
+                                <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">Auto-DM</span>
+                                <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">Lead Scoring</span>
+                            </div>
+                            <div class="flex gap-2 text-[10px] font-medium text-zinc-600 -translate-x-4">
+                                <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">Follow-Up Auto</span>
+                                <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">CRM Ligero</span>
+                                <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">Nurturing</span>
+                            </div>
+                            <div class="flex gap-2 text-[10px] font-medium text-zinc-600 translate-x-2">
+                                <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">Segmentación</span>
+                                <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">Workflows</span>
+                                <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">24/7</span>
+                            </div>
+                        </div>
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900 text-white rounded-2xl p-4 shadow-xl z-10 scale-90 group-hover:scale-100 transition-transform duration-500 flex items-center gap-2">
+                            <iconify-icon icon="solar:bot-minimalistic-bold" class="text-2xl"></iconify-icon>
+                            <div class="flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span class="text-[8px] text-zinc-400 font-medium">Online</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 mt-auto">
+                        <span class="text-xs font-medium text-amber-500 mb-2 block">07</span>
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Automatización con IA & CRM</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Chatbots, respuestas automáticas y CRM ligero que nutre prospectos 24/7, reduciendo tiempos de cierre.</p>
+                    </div>
+                </div>
+
+                <!-- 8. Distribución Omnicanal -->
+                <div class="bg-white rounded-3xl p-8 border border-zinc-100 shadow-sm flex flex-col justify-end min-h-[320px] md:min-h-[380px] relative overflow-hidden group reveal" style="transition-delay: 0.5s;">
+                    <div class="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-zinc-50/80 to-transparent flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        <!-- Hub and spoke -->
+                        <div class="relative w-48 h-40 flex items-center justify-center">
+                            <!-- Central hub -->
+                            <div class="w-12 h-12 bg-zinc-900 rounded-2xl flex items-center justify-center shadow-lg z-10 animate-pulse-ring">
+                                <iconify-icon icon="solar:share-circle-bold" class="text-xl text-white"></iconify-icon>
+                            </div>
+                            <!-- Spokes with platform icons -->
+                            <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center -top-2 left-1/2 -translate-x-1/2 scale-75 group-hover:scale-100 group-hover:-top-4 transition-all duration-500">
+                                <iconify-icon icon="mdi:youtube" class="text-sm text-red-500"></iconify-icon>
+                            </div>
+                            <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center top-4 -right-2 scale-75 group-hover:scale-100 group-hover:-right-4 transition-all duration-500" style="transition-delay: 0.08s;">
+                                <iconify-icon icon="mdi:instagram" class="text-sm text-pink-500"></iconify-icon>
+                            </div>
+                            <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center bottom-4 -right-2 scale-75 group-hover:scale-100 group-hover:-right-4 transition-all duration-500" style="transition-delay: 0.16s;">
+                                <iconify-icon icon="ic:baseline-tiktok" class="text-sm text-zinc-900"></iconify-icon>
+                            </div>
+                            <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center -bottom-2 left-1/2 -translate-x-1/2 scale-75 group-hover:scale-100 group-hover:-bottom-4 transition-all duration-500" style="transition-delay: 0.24s;">
+                                <iconify-icon icon="mdi:linkedin" class="text-sm text-blue-600"></iconify-icon>
+                            </div>
+                            <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center top-4 -left-2 scale-75 group-hover:scale-100 group-hover:-left-4 transition-all duration-500" style="transition-delay: 0.32s;">
+                                <iconify-icon icon="solar:letter-bold" class="text-sm text-amber-500"></iconify-icon>
+                            </div>
+                            <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center bottom-4 -left-2 scale-75 group-hover:scale-100 group-hover:-left-4 transition-all duration-500" style="transition-delay: 0.4s;">
+                                <iconify-icon icon="mdi:facebook" class="text-sm text-blue-500"></iconify-icon>
+                            </div>
+                            <!-- +reach label -->
+                            <div class="absolute -bottom-6 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="transition-delay: 0.4s;">
+                                <span class="text-[9px] font-bold text-amber-500">+reach</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 mt-auto">
+                        <span class="text-xs font-medium text-amber-500 mb-2 block">08</span>
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Distribución Omnicanal</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Amplificamos tu contenido en múltiples plataformas para aumentar alcance orgánico y convertir visibilidad en leads.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: SHOWREEL / PORTFOLIO -->
+        <section id="portfolio" class="w-full py-20 md:py-28 overflow-hidden bg-zinc-900">
+            <div class="max-w-6xl mx-auto px-6 mb-14 flex flex-col items-center text-center">
+                <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-3">Nuestro trabajo habla por nosotros</h2>
+                <p class="text-sm font-normal text-zinc-400">+50 marcas personales transformadas. Así se ve cuando el contenido tiene estrategia.</p>
+            </div>
+            <div class="max-w-6xl mx-auto px-6 flex gap-5 overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
+                <!-- Video 1 -->
+                <div class="relative flex items-center justify-center group reveal min-w-[70vw] md:min-w-0 snap-center shrink-0 md:shrink" style="transition-delay: 0s;">
+                    <!-- Background decorative card -->
+                    <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-transparent border border-white/5 scale-[1.04] translate-y-2 group-hover:scale-[1.06] group-hover:translate-y-3 transition-transform duration-500"></div>
+                    <div class="absolute inset-0 rounded-3xl bg-zinc-800/60 border border-white/[0.08] backdrop-blur-sm scale-[1.02] translate-y-1 group-hover:scale-[1.03] group-hover:translate-y-1.5 transition-transform duration-500"></div>
+                    <!-- Video card -->
+                    <div class="relative w-full aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-2xl shadow-black/50 group-hover:shadow-amber-500/10 transition-shadow duration-500 z-10">
+                        <video src="media/reels.mp4" class="w-full h-full object-contain bg-black" preload="metadata" playsinline></video>
+                        <button onclick="togglePortfolioVideo(this)" class="absolute inset-0 flex items-center justify-center z-10 portfolio-play-btn">
+                            <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg shadow-black/30">
+                                <iconify-icon icon="solar:play-bold" class="text-white text-2xl ml-0.5"></iconify-icon>
+                            </div>
+                        </button>
+                        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
+                        <div class="absolute bottom-4 left-0 w-full text-center text-xs font-medium text-white/60 pointer-events-none z-20">Aftermovie — Evento Corporativo</div>
+                    </div>
+                </div>
+                <!-- Video 2 -->
+                <div class="relative flex items-center justify-center group reveal min-w-[70vw] md:min-w-0 snap-center shrink-0 md:shrink" style="transition-delay: 0.15s;">
+                    <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-rose-500/20 via-pink-500/10 to-transparent border border-white/5 scale-[1.04] translate-y-2 group-hover:scale-[1.06] group-hover:translate-y-3 transition-transform duration-500"></div>
+                    <div class="absolute inset-0 rounded-3xl bg-zinc-800/60 border border-white/[0.08] backdrop-blur-sm scale-[1.02] translate-y-1 group-hover:scale-[1.03] group-hover:translate-y-1.5 transition-transform duration-500"></div>
+                    <div class="relative w-full aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-2xl shadow-black/50 group-hover:shadow-rose-500/10 transition-shadow duration-500 z-10">
+                        <video src="media/Copy%20of%2012-05-2025-JO-reel%2010-V1.mp4" class="w-full h-full object-contain bg-black" preload="metadata" playsinline></video>
+                        <button onclick="togglePortfolioVideo(this)" class="absolute inset-0 flex items-center justify-center z-10 portfolio-play-btn">
+                            <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg shadow-black/30">
+                                <iconify-icon icon="solar:play-bold" class="text-white text-2xl ml-0.5"></iconify-icon>
+                            </div>
+                        </button>
+                        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
+                        <div class="absolute bottom-4 left-0 w-full text-center text-xs font-medium text-white/60 pointer-events-none z-20">VSL — Coach de Negocios</div>
+                    </div>
+                </div>
+                <!-- Video 3 -->
+                <div class="relative flex items-center justify-center group reveal min-w-[70vw] md:min-w-0 snap-center shrink-0 md:shrink" style="transition-delay: 0.3s;">
+                    <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-violet-500/20 via-purple-500/10 to-transparent border border-white/5 scale-[1.04] translate-y-2 group-hover:scale-[1.06] group-hover:translate-y-3 transition-transform duration-500"></div>
+                    <div class="absolute inset-0 rounded-3xl bg-zinc-800/60 border border-white/[0.08] backdrop-blur-sm scale-[1.02] translate-y-1 group-hover:scale-[1.03] group-hover:translate-y-1.5 transition-transform duration-500"></div>
+                    <div class="relative w-full aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-2xl shadow-black/50 group-hover:shadow-violet-500/10 transition-shadow duration-500 z-10">
+                        <video src="media/1on1%20Day%202%20Recap.mp4" class="w-full h-full object-contain bg-black" preload="metadata" playsinline></video>
+                        <button onclick="togglePortfolioVideo(this)" class="absolute inset-0 flex items-center justify-center z-10 portfolio-play-btn">
+                            <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg shadow-black/30">
+                                <iconify-icon icon="solar:play-bold" class="text-white text-2xl ml-0.5"></iconify-icon>
+                            </div>
+                        </button>
+                        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
+                        <div class="absolute bottom-4 left-0 w-full text-center text-xs font-medium text-white/60 pointer-events-none z-20">Reel Campaña — Marca Personal</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4.5: 3D INSTAGRAM CAROUSEL -->
+        <section class="w-full bg-zinc-900 pb-24 pt-8 overflow-hidden">
+            <div class="max-w-6xl mx-auto px-6 mb-10 flex flex-col items-center text-center">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 via-pink-500 to-purple-600 flex items-center justify-center">
+                        <iconify-icon icon="mdi:instagram" class="text-white text-lg"></iconify-icon>
+                    </div>
+                    <span class="text-sm font-medium text-zinc-400">@creaitor.studio</span>
+                </div>
+                <p class="text-xs text-zinc-500">Arrastra para explorar nuestro feed</p>
+            </div>
+
+            <div id="carousel-3d-wrapper" class="relative w-full h-[340px] md:h-[420px] lg:h-[480px] cursor-grab active:cursor-grabbing select-none" style="perspective: 1200px;">
+                <div id="carousel-3d" class="absolute w-full h-full" style="transform-style: preserve-3d; transition: transform 0.05s linear;">
+                </div>
+            </div>
+
+            <!-- Fullscreen overlay for clicked image -->
+            <div id="carousel-overlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-8 md:p-20 opacity-0 pointer-events-none transition-all duration-500" style="will-change: opacity;">
+                <img id="carousel-overlay-img" src="" alt="Preview" class="max-w-full max-h-full rounded-2xl shadow-2xl object-contain scale-90 transition-transform duration-500">
+                <button id="carousel-overlay-close" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+                    <iconify-icon icon="solar:close-circle-linear" class="text-xl"></iconify-icon>
+                </button>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: PROCESO "LA RUTA" -->
+        <section id="proceso" class="w-full max-w-6xl px-6 py-24 md:py-32 flex flex-col items-center">
+            <div class="mb-16 flex flex-col items-center text-center">
+                <span class="bg-white border border-zinc-200 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full mb-6 shadow-sm">El Proceso</span>
+                <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900 max-w-2xl">
+                    La Ruta — De "publico y rezo" a <span class="italic text-zinc-500">"mi contenido vende solo"</span>
+                </h2>
+            </div>
+
+            <div class="relative flex flex-col gap-10 w-full max-w-2xl mx-auto">
+                <!-- Vertical line -->
+                <div class="absolute left-6 top-0 bottom-0 w-px bg-zinc-200"></div>
+
+                <!-- Paso 01 -->
+                <div class="flex gap-6 items-start reveal" style="transition-delay: 0s;">
+                    <div class="w-12 h-12 rounded-full bg-zinc-900 text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">01</div>
+                    <div class="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm flex-1">
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Diagnóstico</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Analizamos tu marca, tu mercado y tu contenido actual. Identificamos qué funciona, qué no, y dónde está la oportunidad que tu competencia no ve.</p>
+                        <span class="text-xs font-medium text-amber-500 flex items-center gap-1.5">
+                            <iconify-icon icon="solar:map-point-linear" class="text-sm"></iconify-icon>
+                            Sesión 1:1 de estrategia
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Paso 02 -->
+                <div class="flex gap-6 items-start reveal" style="transition-delay: 0.15s;">
+                    <div class="w-12 h-12 rounded-full bg-zinc-900 text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">02</div>
+                    <div class="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm flex-1">
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Estrategia de Contenido</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Diseñamos tu plan de video marketing a medida. Cada pieza tiene un propósito: atraer, nutrir o vender. Calendario editorial + guiones + dirección creativa.</p>
+                        <span class="text-xs font-medium text-amber-500 flex items-center gap-1.5">
+                            <iconify-icon icon="solar:map-point-linear" class="text-sm"></iconify-icon>
+                            Tu roadmap completo de contenido
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Paso 03 -->
+                <div class="flex gap-6 items-start reveal" style="transition-delay: 0.3s;">
+                    <div class="w-12 h-12 rounded-full bg-zinc-900 text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">03</div>
+                    <div class="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm flex-1">
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Producción + Automatización</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Producimos tus videos con calidad cinematográfica. Al mismo tiempo, configuramos tu SAI: chatbots, DMs automáticos, captación de leads, follow-ups.</p>
+                        <span class="text-xs font-medium text-amber-500 flex items-center gap-1.5">
+                            <iconify-icon icon="solar:map-point-linear" class="text-sm"></iconify-icon>
+                            Tu máquina funcionando
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Paso 04 -->
+                <div class="flex gap-6 items-start reveal" style="transition-delay: 0.45s;">
+                    <div class="w-12 h-12 rounded-full bg-zinc-900 text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">04</div>
+                    <div class="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm flex-1">
+                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Escalar</h3>
+                        <p class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Optimizamos basándonos en datos reales. Más contenido, más leads, más ventas. Construimos tu comunidad y tus productos digitales.</p>
+                        <span class="text-xs font-medium text-amber-500 flex items-center gap-1.5">
+                            <iconify-icon icon="solar:map-point-linear" class="text-sm"></iconify-icon>
+                            Crecimiento compuesto
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 6: RESULTADOS / STATS -->
+        <section class="w-full py-20 md:py-32 relative flex flex-col items-center justify-center overflow-hidden min-h-[500px] border-y border-zinc-200/50 bg-zinc-100/50">
+            <div class="relative z-10 flex flex-col items-center gap-12 max-w-4xl px-6 text-center">
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-zinc-900 leading-[1.1]">
+                    Los números no <span class="italic text-zinc-500">mienten.</span>
+                </h2>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 w-full">
+                    <div class="flex flex-col items-center gap-2 reveal" style="transition-delay: 0s;">
+                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-zinc-900">+50</span>
+                        <span class="text-sm font-normal text-zinc-500">Marcas transformadas</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 reveal" style="transition-delay: 0.1s;">
+                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-zinc-900">+500K</span>
+                        <span class="text-sm font-normal text-zinc-500">Vistas generadas</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 reveal" style="transition-delay: 0.2s;">
+                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-zinc-900">3X</span>
+                        <span class="text-sm font-normal text-zinc-500">Más leads en 90 días</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 reveal" style="transition-delay: 0.3s;">
+                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-zinc-900">24/7</span>
+                        <span class="text-sm font-normal text-zinc-500">Tu sistema nunca para</span>
+                    </div>
+                </div>
+
+                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="bg-white border border-zinc-200 hover:border-zinc-300 transition-colors rounded-full p-1.5 pr-6 flex items-center gap-3 shadow-sm group mt-4">
+                    <img src="brand_assets/llamada.JPEG" alt="Founder" class="w-10 h-10 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+                    <div class="flex flex-col items-start justify-center">
+                        <span class="text-sm font-medium text-zinc-900">Agenda tu llamada</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 7: TESTIMONIOS + PRICING -->
+        <section class="w-full bg-zinc-900 text-white py-24 md:py-32 px-6 flex flex-col items-center">
+
+            <!-- Testimonials Header -->
+            <div class="mb-16 flex flex-col items-center text-center max-w-3xl">
+                <span class="bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-medium px-4 py-1.5 rounded-full mb-6">Testimonios</span>
+                <h2 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight">
+                    Lo que dicen nuestros <span class="italic text-zinc-400">clientes.</span>
+                </h2>
+            </div>
+
+            <!-- Testimonials Scroll -->
+            <div class="w-full max-w-6xl mb-32 overflow-x-auto hide-scrollbar snap-x snap-mandatory flex gap-4 md:gap-6 pb-8 mask-edges">
+                <!-- Testimonial 1 -->
+                <div class="min-w-[280px] md:min-w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 snap-center shrink-0">
+                    <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-zinc-500"></iconify-icon>
+                    <p class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                        Antes publicaba sin rumbo. Ahora cada video me trae leads calificados directo al DM. En 60 días tripliqué mis consultas.
+                    </p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <img src="https://framerusercontent.com/images/DcNJgQIOkkv7HpGnt8XS2UJ0sGE.png?scale-down-to=512" alt="María" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-medium text-sm">María López</div>
+                            <div class="text-xs text-zinc-500">Coach de Negocios</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="min-w-[320px] md:min-w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 snap-center shrink-0">
+                    <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-zinc-500"></iconify-icon>
+                    <p class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                        La automatización cambió todo. Mi sistema de captación trabaja solo y yo me dedico a cerrar. Creaitor entiende lo que necesitas antes de que lo expliques.
+                    </p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <img src="https://framerusercontent.com/images/deHueM6CDFRvwo3KoYL9UlkKjo.png?scale-down-to=512" alt="Carlos" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-medium text-sm">Carlos Méndez</div>
+                            <div class="text-xs text-zinc-500">Fundador, Méndez Consulting</div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Testimonial 3 -->
+                 <div class="min-w-[320px] md:min-w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 snap-center shrink-0">
+                    <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-zinc-500"></iconify-icon>
+                    <p class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                        Proceso limpio, calidad cinematográfica y sin vueltas. Es como tener un equipo completo de marketing por una fracción del costo.
+                    </p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <img src="https://framerusercontent.com/images/KsgfJQmkr2IUJ4C1etP8vC5ywSU.png?scale-down-to=512" alt="Ana" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-medium text-sm">Ana Rodríguez</div>
+                            <div class="text-xs text-zinc-500">CEO, FitBrand Studio</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="min-w-[10vw] shrink-0 opacity-0"></div>
+            </div>
+
+            <!-- Pricing Section - 3 Plans -->
+            <div class="mb-8 flex flex-col items-center text-center max-w-3xl">
+                <span class="bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-medium px-4 py-1.5 rounded-full mb-6">Planes</span>
+                <h2 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-4">
+                    Elige tu <span class="italic text-zinc-400">camino.</span>
+                </h2>
+                <p class="text-sm font-normal text-zinc-400">Cada plan está diseñado para una etapa diferente. ¿Dónde estás hoy?</p>
+            </div>
+
+            <div id="pricing" class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                <!-- Plan 1: Solopreneur -->
+                <div class="bg-zinc-950 rounded-3xl border border-zinc-800 p-8 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle at top right, rgba(255,255,255,0.03) 0%, transparent 40%);"></div>
+                    <div>
+                        <h3 class="text-xl font-medium mb-2">Solopreneur</h3>
+                        <p class="text-xs font-normal text-zinc-400 mb-8">Para quien empieza a construir autoridad.</p>
+                        <ul class="flex flex-col gap-3 mb-8">
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
+                                8 videos/mes (6 valor + 2 venta)
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
+                                Mini sesión fotográfica
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
+                                Pack de templates editables
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="w-full bg-white/10 hover:bg-white/20 text-white transition-colors py-4 rounded-full text-center text-sm font-medium">
+                        Empezar →
+                    </a>
+                </div>
+
+                <!-- Plan 2: Marca Personal (Recommended) -->
+                <div class="bg-zinc-950 rounded-3xl border border-amber-400/50 p-8 flex flex-col justify-between relative overflow-hidden ring-1 ring-amber-400/20">
+                    <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle at top right, rgba(251,191,36,0.08) 0%, transparent 40%);"></div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-medium">Marca Personal</h3>
+                            <span class="bg-amber-400/20 text-amber-400 text-[10px] px-3 py-1 rounded-full font-medium">★ Recomendado</span>
+                        </div>
+                        <p class="text-xs font-normal text-zinc-400 mb-8">Para quien ya tiene audiencia y quiere convertir.</p>
+                        <ul class="flex flex-col gap-3 mb-8">
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
+                                15 videos/mes (10 valor + 5 venta)
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
+                                Fotografía profesional (2hrs)
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
+                                Diseño gráfico + branding completo
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
+                                Automatización con IA (DMs + leads)
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
+                                Distribución omnicanal
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="w-full bg-white text-zinc-900 hover:bg-zinc-100 transition-colors py-4 rounded-full text-center text-sm font-medium">
+                        Quiero Este →
+                    </a>
+                </div>
+
+                <!-- Plan 3: Marca que Convierte -->
+                <div class="bg-zinc-950 rounded-3xl border border-zinc-800 p-8 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle at top right, rgba(255,255,255,0.03) 0%, transparent 40%);"></div>
+                    <div>
+                        <h3 class="text-xl font-medium mb-2">Marca que Convierte</h3>
+                        <p class="text-xs font-normal text-zinc-400 mb-8">Para quien quiere el sistema completo de ventas.</p>
+                        <ul class="flex flex-col gap-3 mb-8">
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
+                                17 videos/mes (12 valor + 5 venta)
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
+                                Todo lo de Marca Personal +
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
+                                Funnels de venta + productos digitales
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
+                                Comunidad de pago
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium">
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
+                                Distribución omnicanal
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="w-full bg-white/10 hover:bg-white/20 text-white transition-colors py-4 rounded-full text-center text-sm font-medium">
+                        Hablemos →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 8: SOBRE NOSOTROS -->
+        <section class="w-full max-w-6xl px-6 py-24 md:py-32 flex flex-col items-center">
+            <div class="w-full bg-white rounded-3xl p-3 border border-zinc-100 shadow-sm flex flex-col lg:flex-row gap-6 h-auto lg:min-h-[480px]">
+                <!-- Image -->
+                <div class="w-full lg:w-1/2 h-64 lg:h-auto rounded-2xl overflow-hidden relative bg-zinc-100">
+                    <img src="https://framerusercontent.com/images/ueqZoCFRDc46Zk64JejcJN460.png?scale-down-to=1024" class="w-full h-full object-cover" alt="Equipo Creaitor">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+                <!-- Text -->
+                <div class="w-full lg:w-1/2 p-4 lg:p-8 flex flex-col justify-center">
+                    <span class="bg-zinc-100 text-zinc-600 text-[10px] font-medium px-3 py-1 rounded-full mb-6 inline-block w-fit">─── Sobre Nosotros</span>
+                    <h2 class="text-2xl md:text-4xl font-medium tracking-tight text-zinc-900 mb-6">
+                        Somos Creaitor. Y <span class="italic text-zinc-500">odiamos</span> el contenido genérico.
+                    </h2>
+                    <div class="flex flex-col gap-4 text-sm font-normal text-zinc-500 leading-relaxed mb-8">
+                        <p>Creemos que tu contenido puede hacer mucho más que verse bien.</p>
+                        <p>Trabajamos con profesionales que están cansados de improvisar en redes y quieren usar su contenido como una herramienta real de crecimiento.</p>
+                        <p>No vendemos fórmulas mágicas. No prometemos virales. Lo que sí hacemos: escucharte, entender tu negocio, y construir contigo una estrategia de contenido que atraiga a los clientes correctos.</p>
+                        <p>Mientras tú te enfocas en cerrar negocios, nosotros hacemos que los clientes lleguen a ti.</p>
+                    </div>
+                    <p class="text-sm font-medium italic text-zinc-400">— El equipo Creaitor</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 9: FAQ -->
+        <section class="w-full py-24 md:py-32 px-6 flex justify-center bg-white border-t border-zinc-100">
+            <div class="w-full max-w-6xl flex flex-col md:flex-row gap-16">
+                <!-- FAQ Intro -->
+                <div class="w-full md:w-1/3 flex flex-col items-start gap-6">
+                    <span class="bg-zinc-100 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full">FAQs</span>
+                    <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900">
+                        Preguntas <span class="italic text-zinc-500">Frecuentes</span>
+                    </h2>
+
+                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="mt-8 w-full bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-medium px-6 py-3.5 rounded-full transition-colors text-center">
+                        Agenda tu asesoría gratuita →
+                    </a>
+                </div>
+
+                <!-- FAQ Items -->
+                <div class="w-full md:w-2/3 flex flex-col gap-2">
+                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Cuánto tiempo toma ver resultados?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Necesito tener muchos seguidores para empezar?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Qué pasa si ya tengo un equipo de contenido?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Los videos los graban ustedes o yo?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Qué incluye la automatización con IA?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 10: CTA FINAL -->
+        <section id="contacto" class="w-full py-24 md:py-32 px-6 flex flex-col items-center text-center bg-zinc-50 border-t border-zinc-100">
+            <div class="max-w-2xl flex flex-col items-center gap-8">
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-zinc-900 leading-[1.1]">
+                    Tu competencia ya está creando contenido que <span class="italic text-zinc-500">vende.</span>
+                </h2>
+                <p class="text-xl font-medium text-zinc-500">¿Vas a seguir esperando?</p>
+                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="bg-zinc-900 hover:bg-zinc-800 text-white transition-colors rounded-full py-4 px-8 text-base font-medium">
+                    Agendar Asesoría Gratuita →
+                </a>
+                <p class="text-sm font-normal text-zinc-400 max-w-sm leading-relaxed">
+                    30 minutos. Sin compromiso. Te mostramos exactamente cómo transformar tu contenido en ventas.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SECCIÓN 11: FOOTER -->
+    <footer class="w-full px-6 py-12 bg-white border-t border-zinc-100">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="flex items-start text-zinc-900">
+                <span class="text-2xl tracking-tighter font-medium">CRE<span class="text-amber-400">AI</span>TOR</span>
+                <span class="text-xs font-medium ml-1 mt-1">MEDIA</span>
+            </div>
+
+            <div class="flex items-center gap-5 md:gap-8 flex-wrap justify-center">
+                <a href="#" class="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">Instagram</a>
+                <a href="#" class="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">YouTube</a>
+                <a href="#" class="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">TikTok</a>
+                <a href="#" class="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">LinkedIn</a>
+            </div>
+
+            <div class="flex flex-col items-center md:items-end gap-1">
+                <p class="text-xs font-normal text-zinc-400">© 2026 Creaitor Studio. Todos los derechos reservados.</p>
+                <p class="text-[10px] font-normal text-zinc-300 italic">Hecho con estrategia, café y cero templates genéricos.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Intro splash — typewriter effect
+    (function() {
+        const text = 'CREAITOR';
+        const aiStart = 3; // index of 'A' in CREAITOR
+        const aiEnd = 5;   // index after 'I'
+        const container = document.getElementById('splash-text');
+        const baseDelay = 150; // ms between letters
+
+        text.split('').forEach((char, i) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            if (i >= aiStart && i < aiEnd) span.classList.add('ai');
+            span.style.animationDelay = (i * baseDelay) + 'ms';
+            container.appendChild(span);
+        });
+
+        // After all letters animate in + a pause, fade out splash
+        const totalTime = (text.length * baseDelay) + 400 + 800; // letters + animation + pause
+        setTimeout(() => {
+            document.getElementById('splash').classList.add('done');
+            document.body.classList.remove('loading');
+        }, totalTime);
+    })();
+
+    // IntersectionObserver for scroll-triggered animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal, .reveal-line').forEach(el => observer.observe(el));
+
+    // Feature Steps autoplay
+    (function() {
+        const steps = document.querySelectorAll('.feature-step');
+        const slides = document.querySelectorAll('.feature-slide');
+        const progressBar = document.getElementById('feature-progress');
+        if (!steps.length || !slides.length) return;
+
+        let current = 0;
+        let progress = 0;
+        const interval = 4000; // ms per step
+        const tick = 50; // update interval
+
+        function activate(index) {
+            steps.forEach((step, i) => {
+                const circle = step.querySelector('.feature-step-circle');
+                const num = circle.querySelector('span');
+                if (i === index) {
+                    step.style.opacity = '1';
+                    circle.style.borderColor = '#fbbf24';
+                    circle.style.backgroundColor = '#fbbf24';
+                    num.style.color = '#09090b';
+                    num.textContent = '✓';
+                } else if (i < index) {
+                    step.style.opacity = '0.5';
+                    circle.style.borderColor = '#3f3f46';
+                    circle.style.backgroundColor = '#27272a';
+                    num.style.color = '#71717a';
+                    num.textContent = '✓';
+                } else {
+                    step.style.opacity = '0.3';
+                    circle.style.borderColor = '#3f3f46';
+                    circle.style.backgroundColor = '#27272a';
+                    num.style.color = '#71717a';
+                    num.textContent = (i + 1).toString();
+                }
+            });
+
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.style.opacity = '1';
+                    slide.style.transform = 'translateY(0)';
+                } else {
+                    slide.style.opacity = '0';
+                    slide.style.transform = i < index ? 'translateY(-40px)' : 'translateY(40px)';
+                }
+            });
+        }
+
+        // Click to jump to step
+        steps.forEach((step) => {
+            step.addEventListener('click', () => {
+                current = parseInt(step.dataset.step);
+                progress = 0;
+                activate(current);
+            });
+        });
+
+        // Auto-advance timer
+        setInterval(() => {
+            progress += 100 / (interval / tick);
+            if (progressBar) progressBar.style.width = progress + '%';
+            if (progress >= 100) {
+                current = (current + 1) % steps.length;
+                progress = 0;
+                activate(current);
+            }
+        }, tick);
+
+        // Initialize
+        activate(0);
+
+        // Start autoplay only when section is visible
+        const stepsSection = document.getElementById('feature-steps');
+        const stepsObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                activate(0);
+                stepsObserver.disconnect();
+            }
+        }, { threshold: 0.2 });
+        if (stepsSection) stepsObserver.observe(stepsSection);
+    })();
+
+    // Custom cursor with trailing effect
+    (function() {
+        const main = document.getElementById('cursor-main');
+        const trail = document.getElementById('cursor-trail');
+        if (!main || !trail || window.matchMedia('(pointer: coarse)').matches) return;
+
+        let mx = -100, my = -100; // mouse position
+        let tx = -100, ty = -100; // trail position
+
+        document.addEventListener('mousemove', (e) => {
+            mx = e.clientX;
+            my = e.clientY;
+            main.style.opacity = '1';
+            trail.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            main.style.opacity = '0';
+            trail.style.opacity = '0';
+        });
+
+        // Hide default cursor
+        document.documentElement.style.cursor = 'none';
+        document.querySelectorAll('a, button, [role="button"], input, textarea, select, .cursor-pointer').forEach(el => {
+            el.style.cursor = 'none';
+        });
+
+        function animate() {
+            // Main dot follows instantly
+            main.style.left = mx - 4 + 'px';
+            main.style.top = my - 4 + 'px';
+
+            // Trail follows with smooth delay
+            tx += (mx - tx) * 0.15;
+            ty += (my - ty) * 0.15;
+            trail.style.left = tx - 16 + 'px';
+            trail.style.top = ty - 16 + 'px';
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+
+    // 3D Instagram Carousel
+    (function() {
+        const wrapper = document.getElementById('carousel-3d-wrapper');
+        const carousel = document.getElementById('carousel-3d');
+        const overlay = document.getElementById('carousel-overlay');
+        const overlayImg = document.getElementById('carousel-overlay-img');
+        const overlayClose = document.getElementById('carousel-overlay-close');
+        if (!wrapper || !carousel) return;
+
+        const images = [
+            'media/ig-carousel-1.png',
+            'media/ig-carousel-2.png',
+            'media/ig-carousel-3.png',
+            'media/ig-carousel-4.png',
+            'media/ig-carousel-5.png',
+            'media/ig-carousel-6.png',
+            'media/ig-carousel-7.png',
+            'media/ig-carousel-8.png',
+            'media/ig-carousel-9.png',
+            'media/ig-carousel-10.png',
+        ];
+
+        const faceCount = images.length;
+        const isSmall = window.innerWidth < 640;
+        const cylinderWidth = isSmall ? 1100 : 1800;
+        const faceWidth = cylinderWidth / faceCount;
+        const radius = cylinderWidth / (2 * Math.PI);
+
+        // Build faces
+        images.forEach((src, i) => {
+            const face = document.createElement('div');
+            face.className = 'absolute left-1/2 top-1/2 rounded-xl overflow-hidden shadow-lg';
+            face.style.cssText = `
+                width: ${faceWidth - 12}px;
+                height: ${isSmall ? 280 : 380}px;
+                margin-left: ${-(faceWidth - 12) / 2}px;
+                margin-top: ${-(isSmall ? 280 : 380) / 2}px;
+                transform: rotateY(${i * (360 / faceCount)}deg) translateZ(${radius}px);
+                transform-style: preserve-3d;
+                backface-visibility: hidden;
+            `;
+
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = `Instagram post ${i + 1}`;
+            img.className = 'w-full h-full object-cover pointer-events-none';
+            img.loading = 'lazy';
+            img.style.filter = 'blur(2px)';
+            img.onload = () => { img.style.filter = 'blur(0)'; img.style.transition = 'filter 0.4s ease'; };
+
+            // Instagram-style overlay gradient
+            const grad = document.createElement('div');
+            grad.className = 'absolute inset-0 pointer-events-none';
+            grad.style.background = 'linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 40%)';
+
+            face.appendChild(img);
+            face.appendChild(grad);
+
+            face.addEventListener('click', () => {
+                if (Math.abs(velocity) > 0.3) return; // don't open if still spinning
+                overlayImg.src = src;
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlayImg.classList.remove('scale-90');
+                overlayImg.classList.add('scale-100');
+                isActive = false;
+            });
+
+            carousel.appendChild(face);
+        });
+
+        // Drag & momentum
+        let rotation = 0;
+        let velocity = 0;
+        let isDragging = false;
+        let isActive = true;
+        let lastX = 0;
+        let animFrame;
+
+        function updateRotation() {
+            carousel.style.transform = `rotateY(${rotation}deg)`;
+        }
+
+        // Auto-rotate slowly
+        let autoRotate = true;
+        function animate() {
+            if (!isDragging && isActive) {
+                if (autoRotate && Math.abs(velocity) < 0.01) {
+                    rotation += 0.08; // slow auto-rotate
+                }
+                velocity *= 0.96; // friction
+                rotation += velocity;
+            }
+            updateRotation();
+            animFrame = requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Mouse events
+        wrapper.addEventListener('mousedown', (e) => {
+            if (!isActive) return;
+            isDragging = true;
+            autoRotate = false;
+            lastX = e.clientX;
+            velocity = 0;
+            wrapper.style.cursor = 'grabbing';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - lastX;
+            velocity = dx * 0.15;
+            rotation += velocity;
+            lastX = e.clientX;
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                wrapper.style.cursor = 'grab';
+                // Resume auto-rotate after momentum dies
+                setTimeout(() => { if (Math.abs(velocity) < 0.05) autoRotate = true; }, 3000);
+            }
+        });
+
+        // Touch events
+        wrapper.addEventListener('touchstart', (e) => {
+            if (!isActive) return;
+            isDragging = true;
+            autoRotate = false;
+            lastX = e.touches[0].clientX;
+            velocity = 0;
+        }, { passive: true });
+
+        wrapper.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const dx = e.touches[0].clientX - lastX;
+            velocity = dx * 0.15;
+            rotation += velocity;
+            lastX = e.touches[0].clientX;
+        }, { passive: true });
+
+        wrapper.addEventListener('touchend', () => {
+            isDragging = false;
+            setTimeout(() => { if (Math.abs(velocity) < 0.05) autoRotate = true; }, 3000);
+        });
+
+        // Overlay close
+        function closeOverlay() {
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            overlayImg.classList.add('scale-90');
+            overlayImg.classList.remove('scale-100');
+            isActive = true;
+            autoRotate = true;
+        }
+        overlayClose.addEventListener('click', closeOverlay);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeOverlay(); });
+    })();
+
+    // Navbar: shrink on scroll + active section highlight
+    (function() {
+        const nav = document.getElementById('nav-bar');
+        const header = document.getElementById('main-nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            if (scrollY > 60) {
+                nav.classList.add('shadow-[0_4px_30px_-4px_rgba(0,0,0,0.1)]');
+                nav.classList.remove('shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06)]');
+                nav.style.padding = '6px 16px';
+            } else {
+                nav.classList.remove('shadow-[0_4px_30px_-4px_rgba(0,0,0,0.1)]');
+                nav.classList.add('shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06)]');
+                nav.style.padding = '';
+            }
+
+            // Hide nav on scroll down, show on scroll up
+            if (scrollY > 300 && scrollY > lastScroll) {
+                header.style.transform = 'translateY(-110%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            lastScroll = scrollY;
+        }, { passive: true });
+
+        // Active section highlight
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navLinks.forEach(link => {
+                        if (link.getAttribute('href') === '#' + id) {
+                            link.classList.add('text-zinc-900', 'bg-zinc-100/60');
+                            link.classList.remove('text-zinc-500');
+                        } else {
+                            link.classList.remove('text-zinc-900', 'bg-zinc-100/60');
+                            link.classList.add('text-zinc-500');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.3, rootMargin: '-80px 0px -40% 0px' });
+        sections.forEach(s => sectionObserver.observe(s));
+    })();
+
+    // Mobile menu toggle
+    (function() {
+        const toggle = document.getElementById('mobile-menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('menu-icon-open');
+        const iconClose = document.getElementById('menu-icon-close');
+        if (!toggle || !menu) return;
+
+        toggle.addEventListener('click', () => {
+            const isOpen = !menu.classList.contains('hidden');
+            if (isOpen) {
+                menu.classList.add('hidden');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            } else {
+                menu.classList.remove('hidden');
+                iconOpen.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+            }
+        });
+
+        // Close on link click
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            });
+        });
+    })();
+
+    // Portfolio video play/pause toggle
+    function togglePortfolioVideo(btn) {
+        const container = btn.parentElement;
+        const video = container.querySelector('video');
+        const icon = btn.querySelector('iconify-icon');
+        if (video.paused) {
+            // Pause all other portfolio videos first
+            document.querySelectorAll('#portfolio video').forEach(v => {
+                if (v !== video && !v.paused) {
+                    v.pause();
+                    const otherBtn = v.parentElement.querySelector('.portfolio-play-btn');
+                    if (otherBtn) {
+                        otherBtn.querySelector('iconify-icon').setAttribute('icon', 'solar:play-bold');
+                        otherBtn.querySelector('div').style.opacity = '1';
+                    }
+                }
+            });
+            video.play();
+            icon.setAttribute('icon', 'solar:pause-bold');
+            btn.querySelector('div').style.opacity = '0';
+            btn.addEventListener('mouseenter', () => { btn.querySelector('div').style.opacity = '1'; });
+            btn.addEventListener('mouseleave', () => { if (!video.paused) btn.querySelector('div').style.opacity = '0'; });
+        } else {
+            video.pause();
+            icon.setAttribute('icon', 'solar:play-bold');
+            btn.querySelector('div').style.opacity = '1';
+        }
+        video.onended = () => {
+            icon.setAttribute('icon', 'solar:play-bold');
+            btn.querySelector('div').style.opacity = '1';
+        };
+    }
+    </script>
+
+</body>
+</html>

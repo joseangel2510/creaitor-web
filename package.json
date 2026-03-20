@@ -1,0 +1,14 @@
+{
+  "name": "web-project",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "node serve.mjs",
+    "screenshot": "node screenshot.mjs http://localhost:3000",
+    "generate-image": "node tools/generate_image.js"
+  },
+  "devDependencies": {
+    "puppeteer": "^23.11.1"
+  }
+}
