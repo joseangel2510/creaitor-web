@@ -1,8 +1,35 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Creaitor Studio — Tu Contenido Debería Vender Por Ti</title>
+<title data-i18n="meta.title">Creaitor Studio — Tu Contenido Debería Vender Por Ti</title>
+<link rel="icon" type="image/png" href="brand_assets/Ocre clean.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        creaitor: {
+          navy: '#07283B',
+          'navy-light': '#0e3a52',
+          'navy-dark': '#051c2a',
+          ochre: '#C08A30',
+          'ochre-light': '#d9a655',
+          'ochre-dark': '#9a6e26',
+          beige: '#ECEDE7',
+          yellow: '#FFBD09',
+        },
+      },
+      fontFamily: {
+        sans: ['Montserrat', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+    },
+  },
+};
+</script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <style>
 @keyframes marquee {
@@ -52,7 +79,7 @@ transform: translateY(0);
 position: fixed;
 inset: 0;
 z-index: 9999;
-background: #09090b;
+background: #07283B;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -64,11 +91,12 @@ visibility: hidden;
 }
 #splash-text {
 font-size: clamp(2.5rem, 8vw, 6rem);
-font-weight: 500;
+font-weight: 600;
 letter-spacing: -0.04em;
-color: #e4e4e7;
+color: #ECEDE7;
 overflow: hidden;
 display: flex;
+font-family: 'Montserrat', sans-serif;
 }
 #splash-text span {
 display: inline-block;
@@ -77,7 +105,7 @@ transform: translateY(20px);
 animation: letterIn 0.4s ease forwards;
 }
 #splash-text span.ai {
-color: #fbbf24;
+color: #C08A30;
 }
 @keyframes letterIn {
 to {
@@ -101,24 +129,24 @@ transition: opacity 0.3s ease;
 .cursor-main {
 width: 8px;
 height: 8px;
-background: #fbbf24;
+background: #C08A30;
 transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
 }
 .cursor-trail {
 width: 32px;
 height: 32px;
-border: 1.5px solid rgba(251,191,36,0.5);
+border: 1.5px solid rgba(192,138,48,0.5);
 transition: transform 0.08s ease;
 }
 body:has(a:hover) .cursor-main,
 body:has(button:hover) .cursor-main {
 transform: scale(2.5);
-background: rgba(251,191,36,0.6);
+background: rgba(192,138,48,0.6);
 }
 body:has(a:hover) .cursor-trail,
 body:has(button:hover) .cursor-trail {
 transform: scale(1.6);
-border-color: rgba(251,191,36,0.8);
+border-color: rgba(192,138,48,0.8);
 }
 @media (pointer: coarse) {
 .cursor-dot { display: none; }
@@ -133,9 +161,9 @@ border-color: rgba(251,191,36,0.8);
 animation: cursor-blink 1s step-end infinite;
 }
 @keyframes pulse-ring {
-0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
-70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
-100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+0% { box-shadow: 0 0 0 0 rgba(192, 138, 48, 0.4); }
+70% { box-shadow: 0 0 0 10px rgba(192, 138, 48, 0); }
+100% { box-shadow: 0 0 0 0 rgba(192, 138, 48, 0); }
 }
 .animate-pulse-ring {
 animation: pulse-ring 2s ease-out infinite;
@@ -148,9 +176,22 @@ transition: transform 0.6s ease;
 .group:hover .service-bar {
 transform: scaleY(1);
 }
+
+/* Language toggle */
+.lang-btn {
+color: #71717a;
+}
+.lang-btn:hover {
+color: #07283B;
+}
+.lang-btn.active {
+background: #07283B;
+color: #fff;
+box-shadow: 0 2px 8px -2px rgba(7,40,59,0.3);
+}
 </style>
 </head>
-<body class="bg-zinc-50 text-zinc-900 font-sans antialiased min-h-screen flex flex-col relative selection:bg-zinc-200 selection:text-black loading overflow-x-hidden">
+<body class="bg-creaitor-beige text-creaitor-navy font-sans antialiased min-h-screen flex flex-col relative selection:bg-zinc-200 selection:text-black loading overflow-x-hidden">
 
     <!-- Custom Cursor -->
     <div class="cursor-dot cursor-main" id="cursor-main"></div>
@@ -165,28 +206,36 @@ transform: scaleY(1);
     <header id="main-nav" class="fixed top-0 left-0 right-0 z-40 px-4 py-3 flex justify-center pointer-events-none transition-all duration-500">
         <nav class="w-full max-w-5xl pointer-events-auto bg-white/70 backdrop-blur-xl border border-zinc-200/60 rounded-2xl shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06)] px-5 py-2.5 flex items-center justify-between transition-all duration-500" id="nav-bar">
             <!-- Logo -->
-            <a href="#" class="flex items-start text-zinc-900 shrink-0">
-                <span class="text-xl tracking-tighter font-medium">CRE<span class="text-amber-400">AI</span>TOR</span>
-                <span class="text-[9px] font-medium ml-0.5 mt-0.5">MEDIA</span>
+            <a href="#" class="flex items-center shrink-0" aria-label="CREAITOR">
+                <img src="brand_assets/Ocre clean.png" alt="CREAITOR" class="h-8 md:h-9 w-auto">
             </a>
 
             <!-- Desktop Links -->
             <div class="hidden md:flex items-center gap-1">
-                <a href="#servicios" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-zinc-900 px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Servicios</a>
-                <a href="#proceso" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-zinc-900 px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Proceso</a>
-                <a href="#portfolio" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-zinc-900 px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Portfolio</a>
-                <a href="#pricing" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-zinc-900 px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Planes</a>
+                <a href="#servicios" data-i18n="nav.servicios" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-creaitor-navy px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Servicios</a>
+                <a href="#proceso" data-i18n="nav.proceso" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-creaitor-navy px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Proceso</a>
+                <a href="#portfolio" data-i18n="nav.portfolio" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-creaitor-navy px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Portfolio</a>
+                <a href="#pricing" data-i18n="nav.planes" class="nav-link text-[13px] font-medium text-zinc-500 hover:text-creaitor-navy px-3 py-1.5 rounded-lg hover:bg-zinc-100/80 transition-all duration-300">Planes</a>
             </div>
 
-            <!-- CTA Button -->
-            <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="cta-nav-btn relative group shrink-0">
-                <span class="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 opacity-60 blur-md group-hover:opacity-90 group-hover:blur-lg transition-all duration-500 animate-pulse"></span>
-                <span class="relative flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white text-[13px] font-medium px-5 py-2 rounded-full transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(251,191,36,0.3)]">
-                    <span class="hidden sm:inline">Agendar Llamada</span>
-                    <span class="sm:hidden">Agendar</span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
-                </span>
-            </a>
+            <!-- Right side: Lang toggle + CTA -->
+            <div class="flex items-center gap-2 shrink-0">
+                <!-- Language Toggle (Desktop) -->
+                <div class="hidden md:flex items-center gap-0.5 bg-zinc-100/70 rounded-full p-0.5 border border-zinc-200/60">
+                    <button data-lang="es" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-full transition-all duration-300" aria-label="Español">ES</button>
+                    <button data-lang="en" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-full transition-all duration-300" aria-label="English">EN</button>
+                </div>
+
+                <!-- CTA Button -->
+                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="cta-nav-btn relative group shrink-0">
+                    <span class="absolute inset-0 rounded-full bg-gradient-to-r from-creaitor-ochre via-creaitor-ochre-light to-creaitor-ochre opacity-60 blur-md group-hover:opacity-90 group-hover:blur-lg transition-all duration-500 animate-pulse"></span>
+                    <span class="relative flex items-center gap-2 bg-creaitor-navy hover:bg-creaitor-navy-light text-white text-[13px] font-medium px-5 py-2 rounded-full transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(192,138,48,0.4)]">
+                        <span data-i18n="nav.cta_full" class="hidden sm:inline">Agendar Llamada</span>
+                        <span data-i18n="nav.cta_short" class="sm:hidden">Agendar</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-creaitor-ochre animate-ping"></span>
+                    </span>
+                </a>
+            </div>
 
             <!-- Mobile Menu Toggle -->
             <button id="mobile-menu-toggle" class="md:hidden ml-2 w-9 h-9 flex items-center justify-center rounded-xl bg-zinc-100/80 hover:bg-zinc-200/80 transition-colors">
@@ -197,14 +246,19 @@ transform: scaleY(1);
 
         <!-- Mobile Dropdown -->
         <div id="mobile-menu" class="pointer-events-auto hidden md:hidden absolute top-full left-4 right-4 mt-2 bg-white/90 backdrop-blur-xl border border-zinc-200/60 rounded-2xl shadow-[0_8px_32px_-4px_rgba(0,0,0,0.1)] p-4 flex flex-col gap-1 transition-all duration-300">
-            <a href="#servicios" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Servicios</a>
-            <a href="#proceso" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Proceso</a>
-            <a href="#portfolio" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Portfolio</a>
-            <a href="#pricing" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Planes</a>
+            <a href="#servicios" data-i18n="nav.servicios" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-creaitor-navy hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Servicios</a>
+            <a href="#proceso" data-i18n="nav.proceso" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-creaitor-navy hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Proceso</a>
+            <a href="#portfolio" data-i18n="nav.portfolio" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-creaitor-navy hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Portfolio</a>
+            <a href="#pricing" data-i18n="nav.planes" class="mobile-nav-link text-sm font-medium text-zinc-600 hover:text-creaitor-navy hover:bg-zinc-100/80 px-4 py-3 rounded-xl transition-all duration-200">Planes</a>
+            <!-- Mobile language toggle -->
+            <div class="flex items-center justify-center gap-1 bg-zinc-100/70 rounded-full p-0.5 border border-zinc-200/60 mt-3 mx-2">
+                <button data-lang="es" class="lang-btn flex-1 text-xs font-semibold px-3 py-2 rounded-full transition-all duration-300">ES — Español</button>
+                <button data-lang="en" class="lang-btn flex-1 text-xs font-semibold px-3 py-2 rounded-full transition-all duration-300">EN — English</button>
+            </div>
             <div class="border-t border-zinc-200/50 mt-2 pt-3">
-                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="flex items-center justify-center gap-2 bg-zinc-900 text-white text-sm font-medium px-5 py-3 rounded-xl hover:bg-zinc-800 transition-colors">
-                    Agendar Llamada
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="flex items-center justify-center gap-2 bg-creaitor-navy text-white text-sm font-medium px-5 py-3 rounded-xl hover:bg-creaitor-navy-light transition-colors">
+                    <span data-i18n="nav.cta_full">Agendar Llamada</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-creaitor-ochre animate-ping"></span>
                 </a>
             </div>
         </div>
@@ -222,40 +276,40 @@ transform: scaleY(1);
             <!-- Scrolling Pills -->
             <div class="w-full max-w-lg mb-8 overflow-hidden mask-edges">
                 <div class="animate-marquee gap-3 py-2">
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Video Marketing</span>
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Automatización IA</span>
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Embudos de Venta</span>
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Contenido que Convierte</span>
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Estrategia Digital</span>
+                    <span data-i18n="pills.1" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Video Marketing</span>
+                    <span data-i18n="pills.2" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Automatización IA</span>
+                    <span data-i18n="pills.3" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Embudos de Venta</span>
+                    <span data-i18n="pills.4" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Contenido que Convierte</span>
+                    <span data-i18n="pills.5" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Estrategia Digital</span>
                     <!-- Duplicate for infinite scroll -->
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Video Marketing</span>
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Automatización IA</span>
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Embudos de Venta</span>
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Contenido que Convierte</span>
-                    <span class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Estrategia Digital</span>
+                    <span data-i18n="pills.1" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Video Marketing</span>
+                    <span data-i18n="pills.2" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Automatización IA</span>
+                    <span data-i18n="pills.3" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Embudos de Venta</span>
+                    <span data-i18n="pills.4" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Contenido que Convierte</span>
+                    <span data-i18n="pills.5" class="bg-white/60 backdrop-blur-md border border-white/40 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">Estrategia Digital</span>
                 </div>
             </div>
 
             <div class="relative max-w-3xl flex flex-col items-center">
-                <p class="text-xs font-medium tracking-widest uppercase text-zinc-400 mb-6">Creaitor Studio</p>
-                <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tight leading-[1.1] mb-6 text-zinc-900">
+                <p data-i18n="hero.eyebrow" class="text-xs font-medium tracking-widest uppercase text-zinc-400 mb-6">Creaitor Studio</p>
+                <h1 data-i18n="hero.title" class="text-3xl sm:text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tight leading-[1.1] mb-6 text-creaitor-navy">
                     Tu contenido debería <span class="italic text-zinc-500">vender</span> por ti.
                 </h1>
-                <p class="text-lg md:text-xl font-normal text-zinc-500 mb-10 max-w-lg leading-relaxed">
+                <p data-i18n="hero.subtitle" class="text-lg md:text-xl font-normal text-zinc-500 mb-10 max-w-lg leading-relaxed">
                     Transformamos tu presencia digital en un sistema de ventas predecible y escalable.
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                    <a href="#pricing" class="w-full sm:w-auto bg-zinc-900 hover:bg-zinc-800 text-white transition-colors rounded-full py-4 px-8 text-base font-medium flex justify-center items-center">
+                    <a href="#pricing" data-i18n="hero.btn_planes" class="w-full sm:w-auto bg-creaitor-navy hover:bg-creaitor-navy-light text-white transition-colors rounded-full py-4 px-8 text-base font-medium flex justify-center items-center">
                         Ver Planes
                     </a>
                     <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="w-full sm:w-auto bg-white border border-zinc-200 hover:border-zinc-300 transition-colors rounded-full p-1.5 pr-6 flex items-center gap-3 shadow-sm group">
                         <img src="brand_assets/llamada.JPEG" alt="Founder" class="w-10 h-10 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
                         <div class="flex flex-col items-start justify-center">
-                            <span class="text-sm font-medium text-zinc-900">Agenda una asesoría gratuita</span>
+                            <span data-i18n="hero.btn_call" class="text-sm font-medium text-creaitor-navy">Agenda una asesoría gratuita</span>
                             <div class="flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                                <span class="text-xs font-medium text-zinc-400">Disponible ahora</span>
+                                <span class="w-2 h-2 rounded-full bg-creaitor-ochre animate-pulse"></span>
+                                <span data-i18n="hero.call_status" class="text-xs font-medium text-zinc-400">Disponible ahora</span>
                             </div>
                         </div>
                     </a>
@@ -264,9 +318,9 @@ transform: scaleY(1);
         </section>
 
         <!-- SECCIÓN 2: FEATURE STEPS — TU CAMINO -->
-        <section class="w-full bg-zinc-900 text-white py-24 md:py-32 px-6" id="feature-steps">
+        <section class="w-full bg-creaitor-navy text-white py-24 md:py-32 px-6" id="feature-steps">
             <div class="max-w-7xl mx-auto w-full">
-                <h2 class="text-3xl md:text-5xl font-medium tracking-tight mb-14 text-center text-zinc-100">
+                <h2 data-i18n="steps.title" class="text-3xl md:text-5xl font-medium tracking-tight mb-14 text-center text-zinc-100">
                     Tu Camino Hacia Resultados <span class="italic text-zinc-500">Reales</span>
                 </h2>
 
@@ -279,8 +333,8 @@ transform: scaleY(1);
                                 <span class="text-base md:text-lg font-medium text-zinc-400 transition-colors duration-500">1</span>
                             </div>
                             <div class="flex-1 pt-1">
-                                <h3 class="text-xl md:text-2xl font-medium tracking-tight text-zinc-100 mb-1">Diagnóstico Estratégico</h3>
-                                <p class="text-sm md:text-base font-normal text-zinc-400 leading-relaxed">Analizamos tu marca, tu mercado y tu contenido actual. Identificamos exactamente dónde está tu oportunidad de crecimiento.</p>
+                                <h3 data-i18n="steps.s1.title" class="text-xl md:text-2xl font-medium tracking-tight text-zinc-100 mb-1">Diagnóstico Estratégico</h3>
+                                <p data-i18n="steps.s1.desc" class="text-sm md:text-base font-normal text-zinc-400 leading-relaxed">Analizamos tu marca, tu mercado y tu contenido actual. Identificamos exactamente dónde está tu oportunidad de crecimiento.</p>
                             </div>
                         </div>
                         <!-- Step 2 -->
@@ -289,8 +343,8 @@ transform: scaleY(1);
                                 <span class="text-base md:text-lg font-medium text-zinc-400 transition-colors duration-500">2</span>
                             </div>
                             <div class="flex-1 pt-1">
-                                <h3 class="text-xl md:text-2xl font-medium tracking-tight text-zinc-100 mb-1">Producción + Automatización IA</h3>
-                                <p class="text-sm md:text-base font-normal text-zinc-400 leading-relaxed">Producimos tus videos con calidad cinematográfica y configuramos chatbots, DMs automáticos y captación de leads que trabajan 24/7.</p>
+                                <h3 data-i18n="steps.s2.title" class="text-xl md:text-2xl font-medium tracking-tight text-zinc-100 mb-1">Producción + Automatización IA</h3>
+                                <p data-i18n="steps.s2.desc" class="text-sm md:text-base font-normal text-zinc-400 leading-relaxed">Producimos tus videos con calidad cinematográfica y configuramos chatbots, DMs automáticos y captación de leads que trabajan 24/7.</p>
                             </div>
                         </div>
                         <!-- Step 3 -->
@@ -299,8 +353,8 @@ transform: scaleY(1);
                                 <span class="text-base md:text-lg font-medium text-zinc-400 transition-colors duration-500">3</span>
                             </div>
                             <div class="flex-1 pt-1">
-                                <h3 class="text-xl md:text-2xl font-medium tracking-tight text-zinc-100 mb-1">Escalar y Convertir</h3>
-                                <p class="text-sm md:text-base font-normal text-zinc-400 leading-relaxed">Tu contenido genera leads, tu sistema los nutre y tú solo te dedicas a cerrar. Más ventas, menos esfuerzo, crecimiento compuesto.</p>
+                                <h3 data-i18n="steps.s3.title" class="text-xl md:text-2xl font-medium tracking-tight text-zinc-100 mb-1">Escalar y Convertir</h3>
+                                <p data-i18n="steps.s3.desc" class="text-sm md:text-base font-normal text-zinc-400 leading-relaxed">Tu contenido genera leads, tu sistema los nutre y tú solo te dedicas a cerrar. Más ventas, menos esfuerzo, crecimiento compuesto.</p>
                             </div>
                         </div>
                     </div>
@@ -321,7 +375,7 @@ transform: scaleY(1);
                         </div>
                         <!-- Progress bar -->
                         <div class="absolute bottom-0 left-0 right-0 h-1 bg-zinc-700/50 z-10">
-                            <div id="feature-progress" class="h-full bg-amber-400 transition-none" style="width: 0%;"></div>
+                            <div id="feature-progress" class="h-full bg-creaitor-ochre transition-none" style="width: 0%;"></div>
                         </div>
                     </div>
                 </div>
@@ -330,7 +384,7 @@ transform: scaleY(1);
 
         <!-- Social Proof -->
         <section class="w-full max-w-6xl px-6 py-12 flex flex-col md:flex-row items-center gap-8 overflow-hidden border-t border-zinc-200/50">
-            <p class="text-sm font-medium text-zinc-400 whitespace-nowrap">Marcas que ya confían en nosotros</p>
+            <p data-i18n="social.title" class="text-sm font-medium text-zinc-400 whitespace-nowrap">Marcas que ya confían en nosotros</p>
             <div class="flex-grow w-full overflow-hidden mask-edges">
                 <div class="animate-marquee gap-16 py-2 items-center flex opacity-60 grayscale">
                     <span class="text-xl font-medium tracking-tighter uppercase text-zinc-600">TechStartup</span>
@@ -353,8 +407,8 @@ transform: scaleY(1);
         <!-- SECCIÓN 3: SERVICIOS -->
         <section id="servicios" class="w-full max-w-7xl px-6 py-24 md:py-32 flex flex-col items-center">
             <div class="mb-16 flex flex-col items-center text-center reveal">
-                <span class="bg-white border border-zinc-200 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full mb-6 shadow-sm">Servicios</span>
-                <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900 max-w-2xl">
+                <span data-i18n="services.badge" class="bg-white border border-zinc-200 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full mb-6 shadow-sm">Servicios</span>
+                <h2 data-i18n="services.title" class="text-3xl md:text-5xl font-medium tracking-tight text-creaitor-navy max-w-2xl">
                     Todo lo que necesitas para <span class="italic text-zinc-500">dominar</span> el mercado digital.
                 </h2>
             </div>
@@ -367,14 +421,14 @@ transform: scaleY(1);
                     <div class="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-zinc-50/80 to-transparent flex items-center justify-center p-6 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
                         <!-- Phone mockup -->
                         <div class="relative scale-95 group-hover:scale-100 transition-transform duration-500">
-                            <div class="w-[140px] h-[200px] bg-zinc-900 rounded-[20px] p-2 shadow-xl relative overflow-hidden">
-                                <div class="w-full h-full rounded-[14px] bg-gradient-to-br from-amber-400/30 via-zinc-800 to-zinc-900 flex items-center justify-center relative">
+                            <div class="w-[140px] h-[200px] bg-creaitor-navy rounded-[20px] p-2 shadow-xl relative overflow-hidden">
+                                <div class="w-full h-full rounded-[14px] bg-gradient-to-br from-creaitor-ochre/30 via-zinc-800 to-zinc-900 flex items-center justify-center relative">
                                     <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                         <iconify-icon icon="solar:play-bold" class="text-xl text-white ml-0.5"></iconify-icon>
                                     </div>
                                     <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between">
                                         <div class="flex gap-1">
-                                            <div class="h-0.5 w-8 bg-amber-400 rounded-full"></div>
+                                            <div class="h-0.5 w-8 bg-creaitor-ochre rounded-full"></div>
                                             <div class="h-0.5 w-4 bg-white/30 rounded-full"></div>
                                         </div>
                                         <span class="text-[8px] text-white/70 font-medium">0:15</span>
@@ -389,18 +443,18 @@ transform: scaleY(1);
                                 <iconify-icon icon="mdi:instagram" class="text-lg text-pink-500"></iconify-icon>
                             </div>
                             <div class="absolute -bottom-2 -right-6 bg-white rounded-full p-2 shadow-md border border-zinc-100 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-500" style="transition-delay: 0.15s;">
-                                <iconify-icon icon="ic:baseline-tiktok" class="text-lg text-zinc-900"></iconify-icon>
+                                <iconify-icon icon="ic:baseline-tiktok" class="text-lg text-creaitor-navy"></iconify-icon>
                             </div>
                             <!-- Views stat -->
                             <div class="absolute -bottom-1 -left-12 bg-white rounded-xl px-3 py-1.5 shadow-md border border-zinc-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="transition-delay: 0.2s;">
-                                <span class="text-[10px] font-medium text-zinc-900">+12.4K views</span>
+                                <span class="text-[10px] font-medium text-creaitor-navy">+12.4K views</span>
                             </div>
                         </div>
                     </div>
                     <div class="relative z-10 mt-auto">
-                        <span class="text-xs font-medium text-amber-500 mb-2 block">01</span>
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Creación de Contenido en Video</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Reels, shorts, TikToks, testimonios y cápsulas educativas optimizados para atraer leads y generar autoridad de marca.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre mb-2 block">01</span>
+                        <h3 data-i18n="services.s1.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Creación de Contenido en Video</h3>
+                        <p data-i18n="services.s1.desc" class="text-sm font-normal text-zinc-500 leading-relaxed">Reels, shorts, TikToks, testimonios y cápsulas educativas optimizados para atraer leads y generar autoridad de marca.</p>
                     </div>
                 </div>
 
@@ -420,18 +474,18 @@ transform: scaleY(1);
                                 <span>Email Nurturing</span>
                                 <span class="text-zinc-400">38%</span>
                             </div>
-                            <div class="w-28 h-9 bg-zinc-900 rounded-xl shadow-md flex items-center justify-center gap-2 text-[10px] font-medium text-white group-hover:scale-105 transition-transform duration-500" style="transition-delay: 0.24s;">
-                                <iconify-icon icon="solar:check-circle-bold" class="text-amber-400"></iconify-icon>
+                            <div class="w-28 h-9 bg-creaitor-navy rounded-xl shadow-md flex items-center justify-center gap-2 text-[10px] font-medium text-white group-hover:scale-105 transition-transform duration-500" style="transition-delay: 0.24s;">
+                                <iconify-icon icon="solar:check-circle-bold" class="text-creaitor-ochre"></iconify-icon>
                                 <span>Venta</span>
                             </div>
                             <!-- A/B badge -->
-                            <div class="absolute -right-8 top-8 bg-amber-400 text-zinc-900 rounded-lg px-2 py-1 text-[9px] font-bold shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 rotate-3" style="transition-delay: 0.3s;">A/B</div>
+                            <div class="absolute -right-8 top-8 bg-creaitor-ochre text-creaitor-navy rounded-lg px-2 py-1 text-[9px] font-bold shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 rotate-3" style="transition-delay: 0.3s;">A/B</div>
                         </div>
                     </div>
                     <div class="relative z-10 mt-auto">
-                        <span class="text-xs font-medium text-amber-500 mb-2 block">02</span>
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Funnels de Venta & Productos Digitales</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Embudos full-stack: landing SEO, lead magnets, email nurturing, upsells y A/B testing continuo para maximizar ingresos.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre mb-2 block">02</span>
+                        <h3 data-i18n="services.s2.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Funnels de Venta & Productos Digitales</h3>
+                        <p data-i18n="services.s2.desc" class="text-sm font-normal text-zinc-500 leading-relaxed">Embudos full-stack: landing SEO, lead magnets, email nurturing, upsells y A/B testing continuo para maximizar ingresos.</p>
                     </div>
                 </div>
             </div>
@@ -445,35 +499,35 @@ transform: scaleY(1);
                         <div class="bg-white border border-zinc-200 rounded-2xl p-4 shadow-sm w-full max-w-[200px] transform rotate-[-2deg] group-hover:rotate-0 transition-transform duration-500">
                             <!-- Mini calendar -->
                             <div class="flex items-center justify-between mb-3">
-                                <span class="text-[10px] font-bold text-zinc-900">Marzo 2026</span>
-                                <span class="bg-amber-400 text-zinc-900 text-[8px] font-bold px-2 py-0.5 rounded-full">Plan</span>
+                                <span class="text-[10px] font-bold text-creaitor-navy">Marzo 2026</span>
+                                <span class="bg-creaitor-ochre text-creaitor-navy text-[8px] font-bold px-2 py-0.5 rounded-full">Plan</span>
                             </div>
                             <div class="grid grid-cols-5 gap-1 text-[8px] text-zinc-400 font-medium mb-1.5 text-center">
                                 <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span>
                             </div>
                             <div class="grid grid-cols-5 gap-1">
-                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-amber-400 transition-colors duration-300" style="transition-delay: 0.1s;"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-creaitor-ochre transition-colors duration-300" style="transition-delay: 0.1s;"></div>
                                 <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
-                                <div class="w-5 h-5 rounded-md bg-zinc-900 group-hover:bg-zinc-800 transition-colors duration-300"></div>
+                                <div class="w-5 h-5 rounded-md bg-creaitor-navy group-hover:bg-creaitor-navy-light transition-colors duration-300"></div>
                                 <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
-                                <div class="w-5 h-5 rounded-md bg-amber-400"></div>
+                                <div class="w-5 h-5 rounded-md bg-creaitor-ochre"></div>
                                 <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
-                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-zinc-900 transition-colors duration-300" style="transition-delay: 0.2s;"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-creaitor-navy transition-colors duration-300" style="transition-delay: 0.2s;"></div>
                                 <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
-                                <div class="w-5 h-5 rounded-md bg-amber-400"></div>
-                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-amber-400 transition-colors duration-300" style="transition-delay: 0.3s;"></div>
-                                <div class="w-5 h-5 rounded-md bg-zinc-900"></div>
+                                <div class="w-5 h-5 rounded-md bg-creaitor-ochre"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-creaitor-ochre transition-colors duration-300" style="transition-delay: 0.3s;"></div>
+                                <div class="w-5 h-5 rounded-md bg-creaitor-navy"></div>
                                 <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
-                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-zinc-900 transition-colors duration-300" style="transition-delay: 0.15s;"></div>
-                                <div class="w-5 h-5 rounded-md bg-amber-400"></div>
+                                <div class="w-5 h-5 rounded-md bg-zinc-100 group-hover:bg-creaitor-navy transition-colors duration-300" style="transition-delay: 0.15s;"></div>
+                                <div class="w-5 h-5 rounded-md bg-creaitor-ochre"></div>
                                 <div class="w-5 h-5 rounded-md bg-zinc-100"></div>
                             </div>
                         </div>
                     </div>
                     <div class="relative z-10 mt-auto">
-                        <span class="text-xs font-medium text-amber-500 mb-2 block">03</span>
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Estrategia Digital & Planificación</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Calendario editorial, posicionamiento visual y emocional de marca, y guías de venta en redes para cerrar más tratos.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre mb-2 block">03</span>
+                        <h3 data-i18n="services.s3.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Estrategia Digital & Planificación</h3>
+                        <p data-i18n="services.s3.desc" class="text-sm font-normal text-zinc-500 leading-relaxed">Calendario editorial, posicionamiento visual y emocional de marca, y guías de venta en redes para cerrar más tratos.</p>
                     </div>
                 </div>
 
@@ -490,10 +544,10 @@ transform: scaleY(1);
                                 <div class="w-8 bg-zinc-200 rounded-t-lg service-bar" style="height: 55px; transition-delay: 0.2s;"></div>
                                 <span class="text-[8px] text-zinc-400">Comp.</span>
                             </div>
-                            <!-- Your bar (amber, tallest) -->
+                            <!-- Your bar (ochre, tallest) -->
                             <div class="flex flex-col items-center gap-1">
-                                <div class="w-10 bg-amber-400 rounded-t-lg service-bar shadow-lg shadow-amber-400/30" style="height: 90px; transition-delay: 0.3s;"></div>
-                                <span class="text-[8px] font-bold text-zinc-900">Tú</span>
+                                <div class="w-10 bg-creaitor-ochre rounded-t-lg service-bar shadow-lg shadow-creaitor-ochre/30" style="height: 90px; transition-delay: 0.3s;"></div>
+                                <span class="text-[8px] font-bold text-creaitor-navy">Tú</span>
                             </div>
                             <div class="flex flex-col items-center gap-1">
                                 <div class="w-8 bg-zinc-200 rounded-t-lg service-bar" style="height: 35px; transition-delay: 0.4s;"></div>
@@ -510,9 +564,9 @@ transform: scaleY(1);
                         </div>
                     </div>
                     <div class="relative z-10 mt-auto">
-                        <span class="text-xs font-medium text-amber-500 mb-2 block">04</span>
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Análisis de Mercado & Benchmarking</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Investigamos a tu competencia: formatos, hashtags y tendencias. Reporte accionable con oportunidades de diferenciación.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre mb-2 block">04</span>
+                        <h3 data-i18n="services.s4.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Análisis de Mercado & Benchmarking</h3>
+                        <p data-i18n="services.s4.desc" class="text-sm font-normal text-zinc-500 leading-relaxed">Investigamos a tu competencia: formatos, hashtags y tendencias. Reporte accionable con oportunidades de diferenciación.</p>
                     </div>
                 </div>
 
@@ -526,10 +580,10 @@ transform: scaleY(1);
                                 <div class="h-1.5 w-3/4 bg-zinc-300 rounded-full mb-1"></div>
                                 <div class="h-1.5 w-1/2 bg-zinc-300 rounded-full"></div>
                             </div>
-                            <div class="absolute w-32 h-40 bg-gradient-to-br from-amber-100 to-amber-50 rounded-2xl border border-amber-200/60 shadow-sm transform rotate-0 z-10 group-hover:-translate-y-2 transition-transform duration-500 p-3" style="transition-delay: 0.05s;">
-                                <div class="w-full h-16 rounded-lg bg-gradient-to-br from-amber-300 to-amber-200 mb-2"></div>
-                                <div class="h-1.5 w-3/4 bg-amber-300 rounded-full mb-1"></div>
-                                <div class="h-1.5 w-1/2 bg-amber-300 rounded-full"></div>
+                            <div class="absolute w-32 h-40 bg-gradient-to-br from-creaitor-beige to-white rounded-2xl border border-creaitor-ochre/30 shadow-sm transform rotate-0 z-10 group-hover:-translate-y-2 transition-transform duration-500 p-3" style="transition-delay: 0.05s;">
+                                <div class="w-full h-16 rounded-lg bg-gradient-to-br from-creaitor-ochre-light to-creaitor-ochre-light/40 mb-2"></div>
+                                <div class="h-1.5 w-3/4 bg-creaitor-ochre-light rounded-full mb-1"></div>
+                                <div class="h-1.5 w-1/2 bg-creaitor-ochre-light rounded-full"></div>
                             </div>
                             <div class="absolute w-32 h-40 bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-2xl shadow-md transform rotate-6 translate-x-4 group-hover:rotate-12 group-hover:translate-x-8 transition-transform duration-500 p-3" style="transition-delay: 0.1s;">
                                 <div class="w-full h-16 rounded-lg bg-gradient-to-br from-zinc-700 to-zinc-600 mb-2"></div>
@@ -539,9 +593,9 @@ transform: scaleY(1);
                         </div>
                     </div>
                     <div class="relative z-10 mt-auto">
-                        <span class="text-xs font-medium text-amber-500 mb-2 block">05</span>
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Diseño Gráfico & Branding</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Carruseles, thumbnails, flyers y branding visual coherente que refuerza la confianza de compradores.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre mb-2 block">05</span>
+                        <h3 data-i18n="services.s5.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Diseño Gráfico & Branding</h3>
+                        <p data-i18n="services.s5.desc" class="text-sm font-normal text-zinc-500 leading-relaxed">Carruseles, thumbnails, flyers y branding visual coherente que refuerza la confianza de compradores.</p>
                     </div>
                 </div>
             </div>
@@ -558,26 +612,26 @@ transform: scaleY(1);
                                 <div class="h-2 w-full bg-zinc-100 rounded-full group-hover:w-[90%] transition-all duration-500"></div>
                                 <div class="h-2 w-[85%] bg-zinc-100 rounded-full group-hover:w-[80%] transition-all duration-500" style="transition-delay: 0.05s;"></div>
                                 <div class="relative">
-                                    <div class="h-2 w-[70%] bg-amber-400/30 rounded-full"></div>
-                                    <div class="absolute inset-y-0 left-0 h-2 w-[70%] bg-amber-400 rounded-full scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700" style="transition-delay: 0.1s;"></div>
+                                    <div class="h-2 w-[70%] bg-creaitor-ochre/30 rounded-full"></div>
+                                    <div class="absolute inset-y-0 left-0 h-2 w-[70%] bg-creaitor-ochre rounded-full scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700" style="transition-delay: 0.1s;"></div>
                                 </div>
                                 <div class="h-2 w-[60%] bg-zinc-100 rounded-full group-hover:w-[75%] transition-all duration-500" style="transition-delay: 0.15s;"></div>
                             </div>
                             <!-- Blinking cursor -->
                             <div class="flex items-center gap-1 mb-3">
                                 <div class="h-2 w-[40%] bg-zinc-100 rounded-full"></div>
-                                <div class="w-0.5 h-3 bg-zinc-900 animate-cursor-blink"></div>
+                                <div class="w-0.5 h-3 bg-creaitor-navy animate-cursor-blink"></div>
                             </div>
                             <!-- Mini CTA -->
-                            <div class="bg-zinc-900 rounded-full py-1.5 px-4 text-center">
+                            <div class="bg-creaitor-navy rounded-full py-1.5 px-4 text-center">
                                 <span class="text-[9px] font-medium text-white">Comprar Ahora →</span>
                             </div>
                         </div>
                     </div>
                     <div class="relative z-10 mt-auto">
-                        <span class="text-xs font-medium text-amber-500 mb-2 block">06</span>
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Copywriting Persuasivo</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Guiones de video, captions y mensajes de venta con SEO y técnicas de neuroventa que convierten seguidores en clientes.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre mb-2 block">06</span>
+                        <h3 data-i18n="services.s6.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Copywriting Persuasivo</h3>
+                        <p data-i18n="services.s6.desc" class="text-sm font-normal text-zinc-500 leading-relaxed">Guiones de video, captions y mensajes de venta con SEO y técnicas de neuroventa que convierten seguidores en clientes.</p>
                     </div>
                 </div>
 
@@ -601,7 +655,7 @@ transform: scaleY(1);
                                 <span class="bg-white border border-zinc-200 rounded-full px-3 py-1.5 shadow-sm whitespace-nowrap">24/7</span>
                             </div>
                         </div>
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900 text-white rounded-2xl p-4 shadow-xl z-10 scale-90 group-hover:scale-100 transition-transform duration-500 flex items-center gap-2">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-creaitor-navy text-white rounded-2xl p-4 shadow-xl z-10 scale-90 group-hover:scale-100 transition-transform duration-500 flex items-center gap-2">
                             <iconify-icon icon="solar:bot-minimalistic-bold" class="text-2xl"></iconify-icon>
                             <div class="flex items-center gap-1">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -610,9 +664,9 @@ transform: scaleY(1);
                         </div>
                     </div>
                     <div class="relative z-10 mt-auto">
-                        <span class="text-xs font-medium text-amber-500 mb-2 block">07</span>
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Automatización con IA & CRM</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Chatbots, respuestas automáticas y CRM ligero que nutre prospectos 24/7, reduciendo tiempos de cierre.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre mb-2 block">07</span>
+                        <h3 data-i18n="services.s7.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Automatización con IA & CRM</h3>
+                        <p data-i18n="services.s7.desc" class="text-sm font-normal text-zinc-500 leading-relaxed">Chatbots, respuestas automáticas y CRM ligero que nutre prospectos 24/7, reduciendo tiempos de cierre.</p>
                     </div>
                 </div>
 
@@ -622,7 +676,7 @@ transform: scaleY(1);
                         <!-- Hub and spoke -->
                         <div class="relative w-48 h-40 flex items-center justify-center">
                             <!-- Central hub -->
-                            <div class="w-12 h-12 bg-zinc-900 rounded-2xl flex items-center justify-center shadow-lg z-10 animate-pulse-ring">
+                            <div class="w-12 h-12 bg-creaitor-navy rounded-2xl flex items-center justify-center shadow-lg z-10 animate-pulse-ring">
                                 <iconify-icon icon="solar:share-circle-bold" class="text-xl text-white"></iconify-icon>
                             </div>
                             <!-- Spokes with platform icons -->
@@ -633,46 +687,46 @@ transform: scaleY(1);
                                 <iconify-icon icon="mdi:instagram" class="text-sm text-pink-500"></iconify-icon>
                             </div>
                             <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center bottom-4 -right-2 scale-75 group-hover:scale-100 group-hover:-right-4 transition-all duration-500" style="transition-delay: 0.16s;">
-                                <iconify-icon icon="ic:baseline-tiktok" class="text-sm text-zinc-900"></iconify-icon>
+                                <iconify-icon icon="ic:baseline-tiktok" class="text-sm text-creaitor-navy"></iconify-icon>
                             </div>
                             <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center -bottom-2 left-1/2 -translate-x-1/2 scale-75 group-hover:scale-100 group-hover:-bottom-4 transition-all duration-500" style="transition-delay: 0.24s;">
                                 <iconify-icon icon="mdi:linkedin" class="text-sm text-blue-600"></iconify-icon>
                             </div>
                             <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center top-4 -left-2 scale-75 group-hover:scale-100 group-hover:-left-4 transition-all duration-500" style="transition-delay: 0.32s;">
-                                <iconify-icon icon="solar:letter-bold" class="text-sm text-amber-500"></iconify-icon>
+                                <iconify-icon icon="solar:letter-bold" class="text-sm text-creaitor-ochre"></iconify-icon>
                             </div>
                             <div class="absolute w-8 h-8 bg-white rounded-full border border-zinc-200 shadow-sm flex items-center justify-center bottom-4 -left-2 scale-75 group-hover:scale-100 group-hover:-left-4 transition-all duration-500" style="transition-delay: 0.4s;">
                                 <iconify-icon icon="mdi:facebook" class="text-sm text-blue-500"></iconify-icon>
                             </div>
                             <!-- +reach label -->
                             <div class="absolute -bottom-6 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="transition-delay: 0.4s;">
-                                <span class="text-[9px] font-bold text-amber-500">+reach</span>
+                                <span class="text-[9px] font-bold text-creaitor-ochre">+reach</span>
                             </div>
                         </div>
                     </div>
                     <div class="relative z-10 mt-auto">
-                        <span class="text-xs font-medium text-amber-500 mb-2 block">08</span>
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Distribución Omnicanal</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed">Amplificamos tu contenido en múltiples plataformas para aumentar alcance orgánico y convertir visibilidad en leads.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre mb-2 block">08</span>
+                        <h3 data-i18n="services.s8.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Distribución Omnicanal</h3>
+                        <p data-i18n="services.s8.desc" class="text-sm font-normal text-zinc-500 leading-relaxed">Amplificamos tu contenido en múltiples plataformas para aumentar alcance orgánico y convertir visibilidad en leads.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- SECCIÓN 4: SHOWREEL / PORTFOLIO -->
-        <section id="portfolio" class="w-full py-20 md:py-28 overflow-hidden bg-zinc-900">
+        <section id="portfolio" class="w-full py-20 md:py-28 overflow-hidden bg-creaitor-navy">
             <div class="max-w-6xl mx-auto px-6 mb-14 flex flex-col items-center text-center">
-                <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-3">Nuestro trabajo habla por nosotros</h2>
-                <p class="text-sm font-normal text-zinc-400">+50 marcas personales transformadas. Así se ve cuando el contenido tiene estrategia.</p>
+                <h2 data-i18n="portfolio.title" class="text-3xl md:text-4xl font-medium tracking-tight text-white mb-3">Nuestro trabajo habla por nosotros</h2>
+                <p data-i18n="portfolio.subtitle" class="text-sm font-normal text-zinc-400">+50 marcas personales transformadas. Así se ve cuando el contenido tiene estrategia.</p>
             </div>
             <div class="max-w-6xl mx-auto px-6 flex gap-5 overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
                 <!-- Video 1 -->
                 <div class="relative flex items-center justify-center group reveal min-w-[70vw] md:min-w-0 snap-center shrink-0 md:shrink" style="transition-delay: 0s;">
                     <!-- Background decorative card -->
-                    <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-transparent border border-white/5 scale-[1.04] translate-y-2 group-hover:scale-[1.06] group-hover:translate-y-3 transition-transform duration-500"></div>
+                    <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-creaitor-ochre/20 via-creaitor-ochre-light/10 to-transparent border border-white/5 scale-[1.04] translate-y-2 group-hover:scale-[1.06] group-hover:translate-y-3 transition-transform duration-500"></div>
                     <div class="absolute inset-0 rounded-3xl bg-zinc-800/60 border border-white/[0.08] backdrop-blur-sm scale-[1.02] translate-y-1 group-hover:scale-[1.03] group-hover:translate-y-1.5 transition-transform duration-500"></div>
                     <!-- Video card -->
-                    <div class="relative w-full aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-2xl shadow-black/50 group-hover:shadow-amber-500/10 transition-shadow duration-500 z-10">
+                    <div class="relative w-full aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-2xl shadow-black/50 group-hover:shadow-creaitor-ochre/10 transition-shadow duration-500 z-10">
                         <video src="media/reels.mp4" class="w-full h-full object-contain bg-black" preload="metadata" playsinline></video>
                         <button onclick="togglePortfolioVideo(this)" class="absolute inset-0 flex items-center justify-center z-10 portfolio-play-btn">
                             <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-300 shadow-lg shadow-black/30">
@@ -680,7 +734,7 @@ transform: scaleY(1);
                             </div>
                         </button>
                         <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
-                        <div class="absolute bottom-4 left-0 w-full text-center text-xs font-medium text-white/60 pointer-events-none z-20">Aftermovie — Evento Corporativo</div>
+                        <div data-i18n="portfolio.video1" class="absolute bottom-4 left-0 w-full text-center text-xs font-medium text-white/60 pointer-events-none z-20">Aftermovie — Evento Corporativo</div>
                     </div>
                 </div>
                 <!-- Video 2 -->
@@ -695,7 +749,7 @@ transform: scaleY(1);
                             </div>
                         </button>
                         <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
-                        <div class="absolute bottom-4 left-0 w-full text-center text-xs font-medium text-white/60 pointer-events-none z-20">VSL — Coach de Negocios</div>
+                        <div data-i18n="portfolio.video2" class="absolute bottom-4 left-0 w-full text-center text-xs font-medium text-white/60 pointer-events-none z-20">VSL — Coach de Negocios</div>
                     </div>
                 </div>
                 <!-- Video 3 -->
@@ -710,22 +764,22 @@ transform: scaleY(1);
                             </div>
                         </button>
                         <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
-                        <div class="absolute bottom-4 left-0 w-full text-center text-xs font-medium text-white/60 pointer-events-none z-20">Reel Campaña — Marca Personal</div>
+                        <div data-i18n="portfolio.video3" class="absolute bottom-4 left-0 w-full text-center text-xs font-medium text-white/60 pointer-events-none z-20">Reel Campaña — Marca Personal</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- SECCIÓN 4.5: 3D INSTAGRAM CAROUSEL -->
-        <section class="w-full bg-zinc-900 pb-24 pt-8 overflow-hidden">
+        <section class="w-full bg-creaitor-navy pb-24 pt-8 overflow-hidden">
             <div class="max-w-6xl mx-auto px-6 mb-10 flex flex-col items-center text-center">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 via-pink-500 to-purple-600 flex items-center justify-center">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-creaitor-ochre via-pink-500 to-purple-600 flex items-center justify-center">
                         <iconify-icon icon="mdi:instagram" class="text-white text-lg"></iconify-icon>
                     </div>
                     <span class="text-sm font-medium text-zinc-400">@creaitor.studio</span>
                 </div>
-                <p class="text-xs text-zinc-500">Arrastra para explorar nuestro feed</p>
+                <p data-i18n="carousel.hint" class="text-xs text-zinc-500">Arrastra para explorar nuestro feed</p>
             </div>
 
             <div id="carousel-3d-wrapper" class="relative w-full h-[340px] md:h-[420px] lg:h-[480px] cursor-grab active:cursor-grabbing select-none" style="perspective: 1200px;">
@@ -745,8 +799,8 @@ transform: scaleY(1);
         <!-- SECCIÓN 5: PROCESO "LA RUTA" -->
         <section id="proceso" class="w-full max-w-6xl px-6 py-24 md:py-32 flex flex-col items-center">
             <div class="mb-16 flex flex-col items-center text-center">
-                <span class="bg-white border border-zinc-200 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full mb-6 shadow-sm">El Proceso</span>
-                <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900 max-w-2xl">
+                <span data-i18n="proceso.badge" class="bg-white border border-zinc-200 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full mb-6 shadow-sm">El Proceso</span>
+                <h2 data-i18n="proceso.title" class="text-3xl md:text-5xl font-medium tracking-tight text-creaitor-navy max-w-2xl">
                     La Ruta — De "publico y rezo" a <span class="italic text-zinc-500">"mi contenido vende solo"</span>
                 </h2>
             </div>
@@ -757,52 +811,52 @@ transform: scaleY(1);
 
                 <!-- Paso 01 -->
                 <div class="flex gap-6 items-start reveal" style="transition-delay: 0s;">
-                    <div class="w-12 h-12 rounded-full bg-zinc-900 text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">01</div>
+                    <div class="w-12 h-12 rounded-full bg-creaitor-navy text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">01</div>
                     <div class="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm flex-1">
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Diagnóstico</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Analizamos tu marca, tu mercado y tu contenido actual. Identificamos qué funciona, qué no, y dónde está la oportunidad que tu competencia no ve.</p>
-                        <span class="text-xs font-medium text-amber-500 flex items-center gap-1.5">
+                        <h3 data-i18n="proceso.p1.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Diagnóstico</h3>
+                        <p data-i18n="proceso.p1.desc" class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Analizamos tu marca, tu mercado y tu contenido actual. Identificamos qué funciona, qué no, y dónde está la oportunidad que tu competencia no ve.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre flex items-center gap-1.5">
                             <iconify-icon icon="solar:map-point-linear" class="text-sm"></iconify-icon>
-                            Sesión 1:1 de estrategia
+                            <span data-i18n="proceso.p1.tag">Sesión 1:1 de estrategia</span>
                         </span>
                     </div>
                 </div>
 
                 <!-- Paso 02 -->
                 <div class="flex gap-6 items-start reveal" style="transition-delay: 0.15s;">
-                    <div class="w-12 h-12 rounded-full bg-zinc-900 text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">02</div>
+                    <div class="w-12 h-12 rounded-full bg-creaitor-navy text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">02</div>
                     <div class="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm flex-1">
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Estrategia de Contenido</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Diseñamos tu plan de video marketing a medida. Cada pieza tiene un propósito: atraer, nutrir o vender. Calendario editorial + guiones + dirección creativa.</p>
-                        <span class="text-xs font-medium text-amber-500 flex items-center gap-1.5">
+                        <h3 data-i18n="proceso.p2.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Estrategia de Contenido</h3>
+                        <p data-i18n="proceso.p2.desc" class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Diseñamos tu plan de video marketing a medida. Cada pieza tiene un propósito: atraer, nutrir o vender. Calendario editorial + guiones + dirección creativa.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre flex items-center gap-1.5">
                             <iconify-icon icon="solar:map-point-linear" class="text-sm"></iconify-icon>
-                            Tu roadmap completo de contenido
+                            <span data-i18n="proceso.p2.tag">Tu roadmap completo de contenido</span>
                         </span>
                     </div>
                 </div>
 
                 <!-- Paso 03 -->
                 <div class="flex gap-6 items-start reveal" style="transition-delay: 0.3s;">
-                    <div class="w-12 h-12 rounded-full bg-zinc-900 text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">03</div>
+                    <div class="w-12 h-12 rounded-full bg-creaitor-navy text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">03</div>
                     <div class="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm flex-1">
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Producción + Automatización</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Producimos tus videos con calidad cinematográfica. Al mismo tiempo, configuramos tu SAI: chatbots, DMs automáticos, captación de leads, follow-ups.</p>
-                        <span class="text-xs font-medium text-amber-500 flex items-center gap-1.5">
+                        <h3 data-i18n="proceso.p3.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Producción + Automatización</h3>
+                        <p data-i18n="proceso.p3.desc" class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Producimos tus videos con calidad cinematográfica. Al mismo tiempo, configuramos tu SAI: chatbots, DMs automáticos, captación de leads, follow-ups.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre flex items-center gap-1.5">
                             <iconify-icon icon="solar:map-point-linear" class="text-sm"></iconify-icon>
-                            Tu máquina funcionando
+                            <span data-i18n="proceso.p3.tag">Tu máquina funcionando</span>
                         </span>
                     </div>
                 </div>
 
                 <!-- Paso 04 -->
                 <div class="flex gap-6 items-start reveal" style="transition-delay: 0.45s;">
-                    <div class="w-12 h-12 rounded-full bg-zinc-900 text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">04</div>
+                    <div class="w-12 h-12 rounded-full bg-creaitor-navy text-white flex items-center justify-center text-sm font-medium shrink-0 z-10">04</div>
                     <div class="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm flex-1">
-                        <h3 class="text-xl font-medium tracking-tight text-zinc-900 mb-2">Escalar</h3>
-                        <p class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Optimizamos basándonos en datos reales. Más contenido, más leads, más ventas. Construimos tu comunidad y tus productos digitales.</p>
-                        <span class="text-xs font-medium text-amber-500 flex items-center gap-1.5">
+                        <h3 data-i18n="proceso.p4.title" class="text-xl font-medium tracking-tight text-creaitor-navy mb-2">Escalar</h3>
+                        <p data-i18n="proceso.p4.desc" class="text-sm font-normal text-zinc-500 leading-relaxed mb-3">Optimizamos basándonos en datos reales. Más contenido, más leads, más ventas. Construimos tu comunidad y tus productos digitales.</p>
+                        <span class="text-xs font-medium text-creaitor-ochre flex items-center gap-1.5">
                             <iconify-icon icon="solar:map-point-linear" class="text-sm"></iconify-icon>
-                            Crecimiento compuesto
+                            <span data-i18n="proceso.p4.tag">Crecimiento compuesto</span>
                         </span>
                     </div>
                 </div>
@@ -812,46 +866,46 @@ transform: scaleY(1);
         <!-- SECCIÓN 6: RESULTADOS / STATS -->
         <section class="w-full py-20 md:py-32 relative flex flex-col items-center justify-center overflow-hidden min-h-[500px] border-y border-zinc-200/50 bg-zinc-100/50">
             <div class="relative z-10 flex flex-col items-center gap-12 max-w-4xl px-6 text-center">
-                <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-zinc-900 leading-[1.1]">
+                <h2 data-i18n="stats.title" class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-creaitor-navy leading-[1.1]">
                     Los números no <span class="italic text-zinc-500">mienten.</span>
                 </h2>
 
                 <!-- Stats Grid -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 w-full">
                     <div class="flex flex-col items-center gap-2 reveal" style="transition-delay: 0s;">
-                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-zinc-900">+50</span>
-                        <span class="text-sm font-normal text-zinc-500">Marcas transformadas</span>
+                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-creaitor-navy">+50</span>
+                        <span data-i18n="stats.s1" class="text-sm font-normal text-zinc-500">Marcas transformadas</span>
                     </div>
                     <div class="flex flex-col items-center gap-2 reveal" style="transition-delay: 0.1s;">
-                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-zinc-900">+500K</span>
-                        <span class="text-sm font-normal text-zinc-500">Vistas generadas</span>
+                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-creaitor-navy">+500K</span>
+                        <span data-i18n="stats.s2" class="text-sm font-normal text-zinc-500">Vistas generadas</span>
                     </div>
                     <div class="flex flex-col items-center gap-2 reveal" style="transition-delay: 0.2s;">
-                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-zinc-900">3X</span>
-                        <span class="text-sm font-normal text-zinc-500">Más leads en 90 días</span>
+                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-creaitor-navy">3X</span>
+                        <span data-i18n="stats.s3" class="text-sm font-normal text-zinc-500">Más leads en 90 días</span>
                     </div>
                     <div class="flex flex-col items-center gap-2 reveal" style="transition-delay: 0.3s;">
-                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-zinc-900">24/7</span>
-                        <span class="text-sm font-normal text-zinc-500">Tu sistema nunca para</span>
+                        <span class="text-4xl md:text-5xl font-medium tracking-tight text-creaitor-navy">24/7</span>
+                        <span data-i18n="stats.s4" class="text-sm font-normal text-zinc-500">Tu sistema nunca para</span>
                     </div>
                 </div>
 
                 <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="bg-white border border-zinc-200 hover:border-zinc-300 transition-colors rounded-full p-1.5 pr-6 flex items-center gap-3 shadow-sm group mt-4">
                     <img src="brand_assets/llamada.JPEG" alt="Founder" class="w-10 h-10 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
                     <div class="flex flex-col items-start justify-center">
-                        <span class="text-sm font-medium text-zinc-900">Agenda tu llamada</span>
+                        <span data-i18n="stats.cta" class="text-sm font-medium text-creaitor-navy">Agenda tu llamada</span>
                     </div>
                 </a>
             </div>
         </section>
 
         <!-- SECCIÓN 7: TESTIMONIOS + PRICING -->
-        <section class="w-full bg-zinc-900 text-white py-24 md:py-32 px-6 flex flex-col items-center">
+        <section class="w-full bg-creaitor-navy text-white py-24 md:py-32 px-6 flex flex-col items-center">
 
             <!-- Testimonials Header -->
             <div class="mb-16 flex flex-col items-center text-center max-w-3xl">
-                <span class="bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-medium px-4 py-1.5 rounded-full mb-6">Testimonios</span>
-                <h2 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight">
+                <span data-i18n="testimonials.badge" class="bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-medium px-4 py-1.5 rounded-full mb-6">Testimonios</span>
+                <h2 data-i18n="testimonials.title" class="text-3xl md:text-5xl font-medium tracking-tight leading-tight">
                     Lo que dicen nuestros <span class="italic text-zinc-400">clientes.</span>
                 </h2>
             </div>
@@ -861,42 +915,42 @@ transform: scaleY(1);
                 <!-- Testimonial 1 -->
                 <div class="min-w-[280px] md:min-w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 snap-center shrink-0">
                     <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-zinc-500"></iconify-icon>
-                    <p class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                    <p data-i18n="testimonials.t1.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
                         Antes publicaba sin rumbo. Ahora cada video me trae leads calificados directo al DM. En 60 días tripliqué mis consultas.
                     </p>
                     <div class="flex items-center gap-4 mt-auto">
                         <img src="https://framerusercontent.com/images/DcNJgQIOkkv7HpGnt8XS2UJ0sGE.png?scale-down-to=512" alt="María" class="w-12 h-12 rounded-full object-cover">
                         <div>
                             <div class="font-medium text-sm">María López</div>
-                            <div class="text-xs text-zinc-500">Coach de Negocios</div>
+                            <div data-i18n="testimonials.t1.role" class="text-xs text-zinc-500">Coach de Negocios</div>
                         </div>
                     </div>
                 </div>
                 <!-- Testimonial 2 -->
                 <div class="min-w-[320px] md:min-w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 snap-center shrink-0">
                     <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-zinc-500"></iconify-icon>
-                    <p class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                    <p data-i18n="testimonials.t2.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
                         La automatización cambió todo. Mi sistema de captación trabaja solo y yo me dedico a cerrar. Creaitor entiende lo que necesitas antes de que lo expliques.
                     </p>
                     <div class="flex items-center gap-4 mt-auto">
                         <img src="https://framerusercontent.com/images/deHueM6CDFRvwo3KoYL9UlkKjo.png?scale-down-to=512" alt="Carlos" class="w-12 h-12 rounded-full object-cover">
                         <div>
                             <div class="font-medium text-sm">Carlos Méndez</div>
-                            <div class="text-xs text-zinc-500">Fundador, Méndez Consulting</div>
+                            <div data-i18n="testimonials.t2.role" class="text-xs text-zinc-500">Fundador, Méndez Consulting</div>
                         </div>
                     </div>
                 </div>
                  <!-- Testimonial 3 -->
                  <div class="min-w-[320px] md:min-w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 snap-center shrink-0">
                     <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-zinc-500"></iconify-icon>
-                    <p class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                    <p data-i18n="testimonials.t3.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
                         Proceso limpio, calidad cinematográfica y sin vueltas. Es como tener un equipo completo de marketing por una fracción del costo.
                     </p>
                     <div class="flex items-center gap-4 mt-auto">
                         <img src="https://framerusercontent.com/images/KsgfJQmkr2IUJ4C1etP8vC5ywSU.png?scale-down-to=512" alt="Ana" class="w-12 h-12 rounded-full object-cover">
                         <div>
                             <div class="font-medium text-sm">Ana Rodríguez</div>
-                            <div class="text-xs text-zinc-500">CEO, FitBrand Studio</div>
+                            <div data-i18n="testimonials.t3.role" class="text-xs text-zinc-500">CEO, FitBrand Studio</div>
                         </div>
                     </div>
                 </div>
@@ -905,107 +959,107 @@ transform: scaleY(1);
 
             <!-- Pricing Section - 3 Plans -->
             <div class="mb-8 flex flex-col items-center text-center max-w-3xl">
-                <span class="bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-medium px-4 py-1.5 rounded-full mb-6">Planes</span>
-                <h2 class="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-4">
+                <span data-i18n="pricing.badge" class="bg-white/10 backdrop-blur-md border border-white/10 text-white text-xs font-medium px-4 py-1.5 rounded-full mb-6">Planes</span>
+                <h2 data-i18n="pricing.title" class="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-4">
                     Elige tu <span class="italic text-zinc-400">camino.</span>
                 </h2>
-                <p class="text-sm font-normal text-zinc-400">Cada plan está diseñado para una etapa diferente. ¿Dónde estás hoy?</p>
+                <p data-i18n="pricing.subtitle" class="text-sm font-normal text-zinc-400">Cada plan está diseñado para una etapa diferente. ¿Dónde estás hoy?</p>
             </div>
 
             <div id="pricing" class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-6 relative">
                 <!-- Plan 1: Solopreneur -->
-                <div class="bg-zinc-950 rounded-3xl border border-zinc-800 p-8 flex flex-col justify-between relative overflow-hidden">
+                <div class="bg-creaitor-navy-dark rounded-3xl border border-zinc-800 p-8 flex flex-col justify-between relative overflow-hidden">
                     <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle at top right, rgba(255,255,255,0.03) 0%, transparent 40%);"></div>
                     <div>
-                        <h3 class="text-xl font-medium mb-2">Solopreneur</h3>
-                        <p class="text-xs font-normal text-zinc-400 mb-8">Para quien empieza a construir autoridad.</p>
+                        <h3 data-i18n="pricing.p1.name" class="text-xl font-medium mb-2">Solopreneur</h3>
+                        <p data-i18n="pricing.p1.tagline" class="text-xs font-normal text-zinc-400 mb-8">Para quien empieza a construir autoridad.</p>
                         <ul class="flex flex-col gap-3 mb-8">
                             <li class="flex items-center gap-3 text-sm font-medium">
                                 <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
-                                8 videos/mes (6 valor + 2 venta)
+                                <span data-i18n="pricing.p1.f1">8 videos/mes (6 valor + 2 venta)</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
                                 <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
-                                Mini sesión fotográfica
+                                <span data-i18n="pricing.p1.f2">Mini sesión fotográfica</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
                                 <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
-                                Pack de templates editables
+                                <span data-i18n="pricing.p1.f3">Pack de templates editables</span>
                             </li>
                         </ul>
                     </div>
-                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="w-full bg-white/10 hover:bg-white/20 text-white transition-colors py-4 rounded-full text-center text-sm font-medium">
+                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" data-i18n="pricing.p1.cta" class="w-full bg-white/10 hover:bg-white/20 text-white transition-colors py-4 rounded-full text-center text-sm font-medium">
                         Empezar →
                     </a>
                 </div>
 
                 <!-- Plan 2: Marca Personal (Recommended) -->
-                <div class="bg-zinc-950 rounded-3xl border border-amber-400/50 p-8 flex flex-col justify-between relative overflow-hidden ring-1 ring-amber-400/20">
-                    <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle at top right, rgba(251,191,36,0.08) 0%, transparent 40%);"></div>
+                <div class="bg-creaitor-navy-dark rounded-3xl border border-creaitor-ochre/50 p-8 flex flex-col justify-between relative overflow-hidden ring-1 ring-creaitor-ochre/20">
+                    <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle at top right, rgba(192,138,48,0.12) 0%, transparent 40%);"></div>
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-xl font-medium">Marca Personal</h3>
-                            <span class="bg-amber-400/20 text-amber-400 text-[10px] px-3 py-1 rounded-full font-medium">★ Recomendado</span>
+                            <h3 data-i18n="pricing.p2.name" class="text-xl font-medium">Marca Personal</h3>
+                            <span data-i18n="pricing.p2.badge" class="bg-creaitor-ochre/20 text-creaitor-ochre text-[10px] px-3 py-1 rounded-full font-medium">★ Recomendado</span>
                         </div>
-                        <p class="text-xs font-normal text-zinc-400 mb-8">Para quien ya tiene audiencia y quiere convertir.</p>
+                        <p data-i18n="pricing.p2.tagline" class="text-xs font-normal text-zinc-400 mb-8">Para quien ya tiene audiencia y quiere convertir.</p>
                         <ul class="flex flex-col gap-3 mb-8">
                             <li class="flex items-center gap-3 text-sm font-medium">
-                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
-                                15 videos/mes (10 valor + 5 venta)
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-creaitor-ochre"></iconify-icon>
+                                <span data-i18n="pricing.p2.f1">15 videos/mes (10 valor + 5 venta)</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
-                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
-                                Fotografía profesional (2hrs)
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-creaitor-ochre"></iconify-icon>
+                                <span data-i18n="pricing.p2.f2">Fotografía profesional (2hrs)</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
-                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
-                                Diseño gráfico + branding completo
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-creaitor-ochre"></iconify-icon>
+                                <span data-i18n="pricing.p2.f3">Diseño gráfico + branding completo</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
-                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
-                                Automatización con IA (DMs + leads)
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-creaitor-ochre"></iconify-icon>
+                                <span data-i18n="pricing.p2.f4">Automatización con IA (DMs + leads)</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
-                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-amber-400"></iconify-icon>
-                                Distribución omnicanal
+                                <iconify-icon icon="solar:check-circle-linear" class="text-lg text-creaitor-ochre"></iconify-icon>
+                                <span data-i18n="pricing.p2.f5">Distribución omnicanal</span>
                             </li>
                         </ul>
                     </div>
-                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="w-full bg-white text-zinc-900 hover:bg-zinc-100 transition-colors py-4 rounded-full text-center text-sm font-medium">
+                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" data-i18n="pricing.p2.cta" class="w-full bg-white text-creaitor-navy hover:bg-zinc-100 transition-colors py-4 rounded-full text-center text-sm font-medium">
                         Quiero Este →
                     </a>
                 </div>
 
                 <!-- Plan 3: Marca que Convierte -->
-                <div class="bg-zinc-950 rounded-3xl border border-zinc-800 p-8 flex flex-col justify-between relative overflow-hidden">
+                <div class="bg-creaitor-navy-dark rounded-3xl border border-zinc-800 p-8 flex flex-col justify-between relative overflow-hidden">
                     <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle at top right, rgba(255,255,255,0.03) 0%, transparent 40%);"></div>
                     <div>
-                        <h3 class="text-xl font-medium mb-2">Marca que Convierte</h3>
-                        <p class="text-xs font-normal text-zinc-400 mb-8">Para quien quiere el sistema completo de ventas.</p>
+                        <h3 data-i18n="pricing.p3.name" class="text-xl font-medium mb-2">Marca que Convierte</h3>
+                        <p data-i18n="pricing.p3.tagline" class="text-xs font-normal text-zinc-400 mb-8">Para quien quiere el sistema completo de ventas.</p>
                         <ul class="flex flex-col gap-3 mb-8">
                             <li class="flex items-center gap-3 text-sm font-medium">
                                 <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
-                                17 videos/mes (12 valor + 5 venta)
+                                <span data-i18n="pricing.p3.f1">17 videos/mes (12 valor + 5 venta)</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
                                 <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
-                                Todo lo de Marca Personal +
+                                <span data-i18n="pricing.p3.f2">Todo lo de Marca Personal +</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
                                 <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
-                                Funnels de venta + productos digitales
+                                <span data-i18n="pricing.p3.f3">Funnels de venta + productos digitales</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
                                 <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
-                                Comunidad de pago
+                                <span data-i18n="pricing.p3.f4">Comunidad de pago</span>
                             </li>
                             <li class="flex items-center gap-3 text-sm font-medium">
                                 <iconify-icon icon="solar:check-circle-linear" class="text-lg text-zinc-400"></iconify-icon>
-                                Distribución omnicanal
+                                <span data-i18n="pricing.p3.f5">Distribución omnicanal</span>
                             </li>
                         </ul>
                     </div>
-                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="w-full bg-white/10 hover:bg-white/20 text-white transition-colors py-4 rounded-full text-center text-sm font-medium">
+                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" data-i18n="pricing.p3.cta" class="w-full bg-white/10 hover:bg-white/20 text-white transition-colors py-4 rounded-full text-center text-sm font-medium">
                         Hablemos →
                     </a>
                 </div>
@@ -1022,17 +1076,17 @@ transform: scaleY(1);
                 </div>
                 <!-- Text -->
                 <div class="w-full lg:w-1/2 p-4 lg:p-8 flex flex-col justify-center">
-                    <span class="bg-zinc-100 text-zinc-600 text-[10px] font-medium px-3 py-1 rounded-full mb-6 inline-block w-fit">─── Sobre Nosotros</span>
-                    <h2 class="text-2xl md:text-4xl font-medium tracking-tight text-zinc-900 mb-6">
+                    <span data-i18n="about.badge" class="bg-zinc-100 text-zinc-600 text-[10px] font-medium px-3 py-1 rounded-full mb-6 inline-block w-fit">─── Sobre Nosotros</span>
+                    <h2 data-i18n="about.title" class="text-2xl md:text-4xl font-medium tracking-tight text-creaitor-navy mb-6">
                         Somos Creaitor. Y <span class="italic text-zinc-500">odiamos</span> el contenido genérico.
                     </h2>
                     <div class="flex flex-col gap-4 text-sm font-normal text-zinc-500 leading-relaxed mb-8">
-                        <p>Creemos que tu contenido puede hacer mucho más que verse bien.</p>
-                        <p>Trabajamos con profesionales que están cansados de improvisar en redes y quieren usar su contenido como una herramienta real de crecimiento.</p>
-                        <p>No vendemos fórmulas mágicas. No prometemos virales. Lo que sí hacemos: escucharte, entender tu negocio, y construir contigo una estrategia de contenido que atraiga a los clientes correctos.</p>
-                        <p>Mientras tú te enfocas en cerrar negocios, nosotros hacemos que los clientes lleguen a ti.</p>
+                        <p data-i18n="about.p1">Creemos que tu contenido puede hacer mucho más que verse bien.</p>
+                        <p data-i18n="about.p2">Trabajamos con profesionales que están cansados de improvisar en redes y quieren usar su contenido como una herramienta real de crecimiento.</p>
+                        <p data-i18n="about.p3">No vendemos fórmulas mágicas. No prometemos virales. Lo que sí hacemos: escucharte, entender tu negocio, y construir contigo una estrategia de contenido que atraiga a los clientes correctos.</p>
+                        <p data-i18n="about.p4">Mientras tú te enfocas en cerrar negocios, nosotros hacemos que los clientes lleguen a ti.</p>
                     </div>
-                    <p class="text-sm font-medium italic text-zinc-400">— El equipo Creaitor</p>
+                    <p data-i18n="about.signature" class="text-sm font-medium italic text-zinc-400">— El equipo Creaitor</p>
                 </div>
             </div>
         </section>
@@ -1042,45 +1096,45 @@ transform: scaleY(1);
             <div class="w-full max-w-6xl flex flex-col md:flex-row gap-16">
                 <!-- FAQ Intro -->
                 <div class="w-full md:w-1/3 flex flex-col items-start gap-6">
-                    <span class="bg-zinc-100 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full">FAQs</span>
-                    <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900">
+                    <span data-i18n="faq.badge" class="bg-zinc-100 text-zinc-800 text-xs font-medium px-4 py-1.5 rounded-full">FAQs</span>
+                    <h2 data-i18n="faq.title" class="text-3xl md:text-5xl font-medium tracking-tight text-creaitor-navy">
                         Preguntas <span class="italic text-zinc-500">Frecuentes</span>
                     </h2>
 
-                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="mt-8 w-full bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-medium px-6 py-3.5 rounded-full transition-colors text-center">
+                    <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" data-i18n="faq.cta" class="mt-8 w-full bg-creaitor-navy hover:bg-creaitor-navy-light text-white text-sm font-medium px-6 py-3.5 rounded-full transition-colors text-center">
                         Agenda tu asesoría gratuita →
                     </a>
                 </div>
 
                 <!-- FAQ Items -->
                 <div class="w-full md:w-2/3 flex flex-col gap-2">
-                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Cuánto tiempo toma ver resultados?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span data-i18n="faq.q1" class="text-sm md:text-base font-medium text-creaitor-navy">¿Cuánto tiempo toma ver resultados?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
                             <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
                         </div>
                     </div>
-                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Necesito tener muchos seguidores para empezar?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span data-i18n="faq.q2" class="text-sm md:text-base font-medium text-creaitor-navy">¿Necesito tener muchos seguidores para empezar?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
                             <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
                         </div>
                     </div>
-                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Qué pasa si ya tengo un equipo de contenido?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span data-i18n="faq.q3" class="text-sm md:text-base font-medium text-creaitor-navy">¿Qué pasa si ya tengo un equipo de contenido?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
                             <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
                         </div>
                     </div>
-                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Los videos los graban ustedes o yo?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span data-i18n="faq.q4" class="text-sm md:text-base font-medium text-creaitor-navy">¿Los videos los graban ustedes o yo?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
                             <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
                         </div>
                     </div>
-                    <div class="group bg-zinc-50 hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span class="text-sm md:text-base font-medium text-zinc-900">¿Qué incluye la automatización con IA?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-zinc-900 transition-colors">
+                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
+                        <span data-i18n="faq.q5" class="text-sm md:text-base font-medium text-creaitor-navy">¿Qué incluye la automatización con IA?</span>
+                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
                             <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
                         </div>
                     </div>
@@ -1089,16 +1143,16 @@ transform: scaleY(1);
         </section>
 
         <!-- SECCIÓN 10: CTA FINAL -->
-        <section id="contacto" class="w-full py-24 md:py-32 px-6 flex flex-col items-center text-center bg-zinc-50 border-t border-zinc-100">
+        <section id="contacto" class="w-full py-24 md:py-32 px-6 flex flex-col items-center text-center bg-creaitor-beige border-t border-zinc-100">
             <div class="max-w-2xl flex flex-col items-center gap-8">
-                <h2 class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-zinc-900 leading-[1.1]">
+                <h2 data-i18n="finalcta.title" class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-creaitor-navy leading-[1.1]">
                     Tu competencia ya está creando contenido que <span class="italic text-zinc-500">vende.</span>
                 </h2>
-                <p class="text-xl font-medium text-zinc-500">¿Vas a seguir esperando?</p>
-                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" class="bg-zinc-900 hover:bg-zinc-800 text-white transition-colors rounded-full py-4 px-8 text-base font-medium">
+                <p data-i18n="finalcta.question" class="text-xl font-medium text-zinc-500">¿Vas a seguir esperando?</p>
+                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" data-i18n="finalcta.btn" class="bg-creaitor-navy hover:bg-creaitor-navy-light text-white transition-colors rounded-full py-4 px-8 text-base font-medium">
                     Agendar Asesoría Gratuita →
                 </a>
-                <p class="text-sm font-normal text-zinc-400 max-w-sm leading-relaxed">
+                <p data-i18n="finalcta.note" class="text-sm font-normal text-zinc-400 max-w-sm leading-relaxed">
                     30 minutos. Sin compromiso. Te mostramos exactamente cómo transformar tu contenido en ventas.
                 </p>
             </div>
@@ -1109,23 +1163,339 @@ transform: scaleY(1);
     <!-- SECCIÓN 11: FOOTER -->
     <footer class="w-full px-6 py-12 bg-white border-t border-zinc-100">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="flex items-start text-zinc-900">
-                <span class="text-2xl tracking-tighter font-medium">CRE<span class="text-amber-400">AI</span>TOR</span>
-                <span class="text-xs font-medium ml-1 mt-1">MEDIA</span>
-            </div>
+            <a href="#" class="flex items-center shrink-0" aria-label="CREAITOR">
+                <img src="brand_assets/Ocre clean.png" alt="CREAITOR" class="h-10 md:h-12 w-auto">
+            </a>
 
             <div class="flex items-center gap-5 md:gap-8 flex-wrap justify-center">
-                <a href="https://www.instagram.com/kevinchristopher._/" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">Instagram</a>
+                <a href="https://www.instagram.com/kevinchristopher._/" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-zinc-500 hover:text-creaitor-navy transition-colors">Instagram</a>
             </div>
 
             <div class="flex flex-col items-center md:items-end gap-1">
-                <p class="text-xs font-normal text-zinc-400">© 2026 Creaitor Studio. Todos los derechos reservados.</p>
-                <p class="text-[10px] font-normal text-zinc-300 italic">Hecho con estrategia, café y cero templates genéricos.</p>
+                <p data-i18n="footer.copyright" class="text-xs font-normal text-zinc-400">© 2026 Creaitor Studio. Todos los derechos reservados.</p>
+                <p data-i18n="footer.tagline" class="text-[10px] font-normal text-zinc-300 italic">Hecho con estrategia, café y cero templates genéricos.</p>
             </div>
         </div>
     </footer>
 
     <script>
+    // ============ i18n: Translations Dictionary ============
+    const I18N = {
+        es: {
+            'meta.title': 'Creaitor Studio — Tu Contenido Debería Vender Por Ti',
+            // Nav
+            'nav.servicios': 'Servicios',
+            'nav.proceso': 'Proceso',
+            'nav.portfolio': 'Portfolio',
+            'nav.planes': 'Planes',
+            'nav.cta_full': 'Agendar Llamada',
+            'nav.cta_short': 'Agendar',
+            // Hero
+            'pills.1': 'Video Marketing',
+            'pills.2': 'Automatización IA',
+            'pills.3': 'Embudos de Venta',
+            'pills.4': 'Contenido que Convierte',
+            'pills.5': 'Estrategia Digital',
+            'hero.eyebrow': 'Creaitor Studio',
+            'hero.title': 'Tu contenido debería <span class="italic text-zinc-500">vender</span> por ti.',
+            'hero.subtitle': 'Transformamos tu presencia digital en un sistema de ventas predecible y escalable.',
+            'hero.btn_planes': 'Ver Planes',
+            'hero.btn_call': 'Agenda una asesoría gratuita',
+            'hero.call_status': 'Disponible ahora',
+            // Social proof
+            'social.title': 'Marcas que ya confían en nosotros',
+            // Steps
+            'steps.title': 'Tu Camino Hacia Resultados <span class="italic text-zinc-500">Reales</span>',
+            'steps.s1.title': 'Diagnóstico Estratégico',
+            'steps.s1.desc': 'Analizamos tu marca, tu mercado y tu contenido actual. Identificamos exactamente dónde está tu oportunidad de crecimiento.',
+            'steps.s2.title': 'Producción + Automatización IA',
+            'steps.s2.desc': 'Producimos tus videos con calidad cinematográfica y configuramos chatbots, DMs automáticos y captación de leads que trabajan 24/7.',
+            'steps.s3.title': 'Escalar y Convertir',
+            'steps.s3.desc': 'Tu contenido genera leads, tu sistema los nutre y tú solo te dedicas a cerrar. Más ventas, menos esfuerzo, crecimiento compuesto.',
+            // Services
+            'services.badge': 'Servicios',
+            'services.title': 'Todo lo que necesitas para <span class="italic text-zinc-500">dominar</span> el mercado digital.',
+            'services.s1.title': 'Creación de Contenido en Video',
+            'services.s1.desc': 'Reels, shorts, TikToks, testimonios y cápsulas educativas optimizados para atraer leads y generar autoridad de marca.',
+            'services.s2.title': 'Funnels de Venta & Productos Digitales',
+            'services.s2.desc': 'Embudos full-stack: landing SEO, lead magnets, email nurturing, upsells y A/B testing continuo para maximizar ingresos.',
+            'services.s3.title': 'Estrategia Digital & Planificación',
+            'services.s3.desc': 'Calendario editorial, posicionamiento visual y emocional de marca, y guías de venta en redes para cerrar más tratos.',
+            'services.s4.title': 'Análisis de Mercado & Benchmarking',
+            'services.s4.desc': 'Investigamos a tu competencia: formatos, hashtags y tendencias. Reporte accionable con oportunidades de diferenciación.',
+            'services.s5.title': 'Diseño Gráfico & Branding',
+            'services.s5.desc': 'Carruseles, thumbnails, flyers y branding visual coherente que refuerza la confianza de compradores.',
+            'services.s6.title': 'Copywriting Persuasivo',
+            'services.s6.desc': 'Guiones de video, captions y mensajes de venta con SEO y técnicas de neuroventa que convierten seguidores en clientes.',
+            'services.s7.title': 'Automatización con IA & CRM',
+            'services.s7.desc': 'Chatbots, respuestas automáticas y CRM ligero que nutre prospectos 24/7, reduciendo tiempos de cierre.',
+            'services.s8.title': 'Distribución Omnicanal',
+            'services.s8.desc': 'Amplificamos tu contenido en múltiples plataformas para aumentar alcance orgánico y convertir visibilidad en leads.',
+            // Portfolio
+            'portfolio.title': 'Nuestro trabajo habla por nosotros',
+            'portfolio.subtitle': '+50 marcas personales transformadas. Así se ve cuando el contenido tiene estrategia.',
+            'portfolio.video1': 'Aftermovie — Evento Corporativo',
+            'portfolio.video2': 'VSL — Coach de Negocios',
+            'portfolio.video3': 'Reel Campaña — Marca Personal',
+            'carousel.hint': 'Arrastra para explorar nuestro feed',
+            // Proceso
+            'proceso.badge': 'El Proceso',
+            'proceso.title': 'La Ruta — De "publico y rezo" a <span class="italic text-zinc-500">"mi contenido vende solo"</span>',
+            'proceso.p1.title': 'Diagnóstico',
+            'proceso.p1.desc': 'Analizamos tu marca, tu mercado y tu contenido actual. Identificamos qué funciona, qué no, y dónde está la oportunidad que tu competencia no ve.',
+            'proceso.p1.tag': 'Sesión 1:1 de estrategia',
+            'proceso.p2.title': 'Estrategia de Contenido',
+            'proceso.p2.desc': 'Diseñamos tu plan de video marketing a medida. Cada pieza tiene un propósito: atraer, nutrir o vender. Calendario editorial + guiones + dirección creativa.',
+            'proceso.p2.tag': 'Tu roadmap completo de contenido',
+            'proceso.p3.title': 'Producción + Automatización',
+            'proceso.p3.desc': 'Producimos tus videos con calidad cinematográfica. Al mismo tiempo, configuramos tu SAI: chatbots, DMs automáticos, captación de leads, follow-ups.',
+            'proceso.p3.tag': 'Tu máquina funcionando',
+            'proceso.p4.title': 'Escalar',
+            'proceso.p4.desc': 'Optimizamos basándonos en datos reales. Más contenido, más leads, más ventas. Construimos tu comunidad y tus productos digitales.',
+            'proceso.p4.tag': 'Crecimiento compuesto',
+            // Stats
+            'stats.title': 'Los números no <span class="italic text-zinc-500">mienten.</span>',
+            'stats.s1': 'Marcas transformadas',
+            'stats.s2': 'Vistas generadas',
+            'stats.s3': 'Más leads en 90 días',
+            'stats.s4': 'Tu sistema nunca para',
+            'stats.cta': 'Agenda tu llamada',
+            // Testimonials
+            'testimonials.badge': 'Testimonios',
+            'testimonials.title': 'Lo que dicen nuestros <span class="italic text-zinc-400">clientes.</span>',
+            'testimonials.t1.quote': 'Antes publicaba sin rumbo. Ahora cada video me trae leads calificados directo al DM. En 60 días tripliqué mis consultas.',
+            'testimonials.t1.role': 'Coach de Negocios',
+            'testimonials.t2.quote': 'La automatización cambió todo. Mi sistema de captación trabaja solo y yo me dedico a cerrar. Creaitor entiende lo que necesitas antes de que lo expliques.',
+            'testimonials.t2.role': 'Fundador, Méndez Consulting',
+            'testimonials.t3.quote': 'Proceso limpio, calidad cinematográfica y sin vueltas. Es como tener un equipo completo de marketing por una fracción del costo.',
+            'testimonials.t3.role': 'CEO, FitBrand Studio',
+            // Pricing
+            'pricing.badge': 'Planes',
+            'pricing.title': 'Elige tu <span class="italic text-zinc-400">camino.</span>',
+            'pricing.subtitle': 'Cada plan está diseñado para una etapa diferente. ¿Dónde estás hoy?',
+            'pricing.p1.name': 'Solopreneur',
+            'pricing.p1.tagline': 'Para quien empieza a construir autoridad.',
+            'pricing.p1.f1': '8 videos/mes (6 valor + 2 venta)',
+            'pricing.p1.f2': 'Mini sesión fotográfica',
+            'pricing.p1.f3': 'Pack de templates editables',
+            'pricing.p1.cta': 'Empezar →',
+            'pricing.p2.name': 'Marca Personal',
+            'pricing.p2.badge': '★ Recomendado',
+            'pricing.p2.tagline': 'Para quien ya tiene audiencia y quiere convertir.',
+            'pricing.p2.f1': '15 videos/mes (10 valor + 5 venta)',
+            'pricing.p2.f2': 'Fotografía profesional (2hrs)',
+            'pricing.p2.f3': 'Diseño gráfico + branding completo',
+            'pricing.p2.f4': 'Automatización con IA (DMs + leads)',
+            'pricing.p2.f5': 'Distribución omnicanal',
+            'pricing.p2.cta': 'Quiero Este →',
+            'pricing.p3.name': 'Marca que Convierte',
+            'pricing.p3.tagline': 'Para quien quiere el sistema completo de ventas.',
+            'pricing.p3.f1': '17 videos/mes (12 valor + 5 venta)',
+            'pricing.p3.f2': 'Todo lo de Marca Personal +',
+            'pricing.p3.f3': 'Funnels de venta + productos digitales',
+            'pricing.p3.f4': 'Comunidad de pago',
+            'pricing.p3.f5': 'Distribución omnicanal',
+            'pricing.p3.cta': 'Hablemos →',
+            // About
+            'about.badge': '─── Sobre Nosotros',
+            'about.title': 'Somos Creaitor. Y <span class="italic text-zinc-500">odiamos</span> el contenido genérico.',
+            'about.p1': 'Creemos que tu contenido puede hacer mucho más que verse bien.',
+            'about.p2': 'Trabajamos con profesionales que están cansados de improvisar en redes y quieren usar su contenido como una herramienta real de crecimiento.',
+            'about.p3': 'No vendemos fórmulas mágicas. No prometemos virales. Lo que sí hacemos: escucharte, entender tu negocio, y construir contigo una estrategia de contenido que atraiga a los clientes correctos.',
+            'about.p4': 'Mientras tú te enfocas en cerrar negocios, nosotros hacemos que los clientes lleguen a ti.',
+            'about.signature': '— El equipo Creaitor',
+            // FAQ
+            'faq.badge': 'FAQs',
+            'faq.title': 'Preguntas <span class="italic text-zinc-500">Frecuentes</span>',
+            'faq.cta': 'Agenda tu asesoría gratuita →',
+            'faq.q1': '¿Cuánto tiempo toma ver resultados?',
+            'faq.q2': '¿Necesito tener muchos seguidores para empezar?',
+            'faq.q3': '¿Qué pasa si ya tengo un equipo de contenido?',
+            'faq.q4': '¿Los videos los graban ustedes o yo?',
+            'faq.q5': '¿Qué incluye la automatización con IA?',
+            // Final CTA
+            'finalcta.title': 'Tu competencia ya está creando contenido que <span class="italic text-zinc-500">vende.</span>',
+            'finalcta.question': '¿Vas a seguir esperando?',
+            'finalcta.btn': 'Agendar Asesoría Gratuita →',
+            'finalcta.note': '30 minutos. Sin compromiso. Te mostramos exactamente cómo transformar tu contenido en ventas.',
+            // Footer
+            'footer.copyright': '© 2026 Creaitor Studio. Todos los derechos reservados.',
+            'footer.tagline': 'Hecho con estrategia, café y cero templates genéricos.',
+        },
+        en: {
+            'meta.title': 'Creaitor Studio — Your Content Should Sell For You',
+            // Nav
+            'nav.servicios': 'Services',
+            'nav.proceso': 'Process',
+            'nav.portfolio': 'Portfolio',
+            'nav.planes': 'Plans',
+            'nav.cta_full': 'Book a Call',
+            'nav.cta_short': 'Book',
+            // Hero
+            'pills.1': 'Video Marketing',
+            'pills.2': 'AI Automation',
+            'pills.3': 'Sales Funnels',
+            'pills.4': 'Content That Converts',
+            'pills.5': 'Digital Strategy',
+            'hero.eyebrow': 'Creaitor Studio',
+            'hero.title': 'Your content should <span class="italic text-zinc-500">sell</span> for you.',
+            'hero.subtitle': 'We turn your digital presence into a predictable, scalable sales system.',
+            'hero.btn_planes': 'See Plans',
+            'hero.btn_call': 'Book a free strategy call',
+            'hero.call_status': 'Available now',
+            // Social proof
+            'social.title': 'Brands that already trust us',
+            // Steps
+            'steps.title': 'Your Path To <span class="italic text-zinc-500">Real</span> Results',
+            'steps.s1.title': 'Strategic Diagnosis',
+            'steps.s1.desc': 'We analyze your brand, your market and your current content. We pinpoint exactly where your growth opportunity lies.',
+            'steps.s2.title': 'Production + AI Automation',
+            'steps.s2.desc': 'We produce cinematic-quality videos and set up chatbots, automated DMs and lead capture systems that work 24/7.',
+            'steps.s3.title': 'Scale and Convert',
+            'steps.s3.desc': 'Your content generates leads, your system nurtures them, and you focus on closing. More sales, less effort, compound growth.',
+            // Services
+            'services.badge': 'Services',
+            'services.title': 'Everything you need to <span class="italic text-zinc-500">dominate</span> the digital market.',
+            'services.s1.title': 'Video Content Creation',
+            'services.s1.desc': 'Reels, shorts, TikToks, testimonials and educational content optimized to attract leads and build brand authority.',
+            'services.s2.title': 'Sales Funnels & Digital Products',
+            'services.s2.desc': 'Full-stack funnels: SEO landing pages, lead magnets, email nurturing, upsells and continuous A/B testing to maximize revenue.',
+            'services.s3.title': 'Digital Strategy & Planning',
+            'services.s3.desc': 'Editorial calendar, visual and emotional brand positioning, and social-selling guides to close more deals.',
+            'services.s4.title': 'Market Research & Benchmarking',
+            'services.s4.desc': 'We research your competition: formats, hashtags and trends. Actionable report with differentiation opportunities.',
+            'services.s5.title': 'Graphic Design & Branding',
+            'services.s5.desc': 'Carousels, thumbnails, flyers and a coherent visual brand that reinforces buyer trust.',
+            'services.s6.title': 'Persuasive Copywriting',
+            'services.s6.desc': 'Video scripts, captions and sales messaging with SEO and neuroselling techniques that turn followers into customers.',
+            'services.s7.title': 'AI Automation & CRM',
+            'services.s7.desc': 'Chatbots, automated replies and lightweight CRM that nurtures prospects 24/7, shortening time-to-close.',
+            'services.s8.title': 'Omnichannel Distribution',
+            'services.s8.desc': 'We amplify your content across multiple platforms to grow organic reach and turn visibility into leads.',
+            // Portfolio
+            'portfolio.title': 'Our work speaks for itself',
+            'portfolio.subtitle': '+50 personal brands transformed. This is what content looks like when it has strategy.',
+            'portfolio.video1': 'Aftermovie — Corporate Event',
+            'portfolio.video2': 'VSL — Business Coach',
+            'portfolio.video3': 'Campaign Reel — Personal Brand',
+            'carousel.hint': 'Drag to explore our feed',
+            // Proceso
+            'proceso.badge': 'The Process',
+            'proceso.title': 'The Path — From "post and pray" to <span class="italic text-zinc-500">"my content sells on its own"</span>',
+            'proceso.p1.title': 'Diagnosis',
+            'proceso.p1.desc': 'We analyze your brand, your market and your current content. We identify what works, what doesn\'t, and where the opportunity your competition can\'t see lives.',
+            'proceso.p1.tag': '1:1 strategy session',
+            'proceso.p2.title': 'Content Strategy',
+            'proceso.p2.desc': 'We design your custom video marketing plan. Every piece has a purpose: attract, nurture or sell. Editorial calendar + scripts + creative direction.',
+            'proceso.p2.tag': 'Your complete content roadmap',
+            'proceso.p3.title': 'Production + Automation',
+            'proceso.p3.desc': 'We produce your videos with cinematic quality. At the same time, we set up your SAI: chatbots, automated DMs, lead capture, follow-ups.',
+            'proceso.p3.tag': 'Your machine running',
+            'proceso.p4.title': 'Scale',
+            'proceso.p4.desc': 'We optimize based on real data. More content, more leads, more sales. We build your community and your digital products.',
+            'proceso.p4.tag': 'Compound growth',
+            // Stats
+            'stats.title': 'The numbers don\'t <span class="italic text-zinc-500">lie.</span>',
+            'stats.s1': 'Brands transformed',
+            'stats.s2': 'Views generated',
+            'stats.s3': 'More leads in 90 days',
+            'stats.s4': 'Your system never stops',
+            'stats.cta': 'Book your call',
+            // Testimonials
+            'testimonials.badge': 'Testimonials',
+            'testimonials.title': 'What our <span class="italic text-zinc-400">clients</span> say.',
+            'testimonials.t1.quote': 'Before, I posted aimlessly. Now every video brings me qualified leads straight into my DMs. In 60 days I tripled my consultations.',
+            'testimonials.t1.role': 'Business Coach',
+            'testimonials.t2.quote': 'Automation changed everything. My lead capture system runs on its own and I focus on closing. Creaitor understands what you need before you explain it.',
+            'testimonials.t2.role': 'Founder, Méndez Consulting',
+            'testimonials.t3.quote': 'Clean process, cinematic quality, no runaround. It\'s like having an entire marketing team at a fraction of the cost.',
+            'testimonials.t3.role': 'CEO, FitBrand Studio',
+            // Pricing
+            'pricing.badge': 'Plans',
+            'pricing.title': 'Choose your <span class="italic text-zinc-400">path.</span>',
+            'pricing.subtitle': 'Each plan is designed for a different stage. Where are you today?',
+            'pricing.p1.name': 'Solopreneur',
+            'pricing.p1.tagline': 'For those just starting to build authority.',
+            'pricing.p1.f1': '8 videos/month (6 value + 2 sales)',
+            'pricing.p1.f2': 'Mini photo session',
+            'pricing.p1.f3': 'Editable templates pack',
+            'pricing.p1.cta': 'Get Started →',
+            'pricing.p2.name': 'Personal Brand',
+            'pricing.p2.badge': '★ Recommended',
+            'pricing.p2.tagline': 'For those who already have an audience and want to convert.',
+            'pricing.p2.f1': '15 videos/month (10 value + 5 sales)',
+            'pricing.p2.f2': 'Professional photography (2hrs)',
+            'pricing.p2.f3': 'Complete graphic design + branding',
+            'pricing.p2.f4': 'AI automation (DMs + leads)',
+            'pricing.p2.f5': 'Omnichannel distribution',
+            'pricing.p2.cta': 'I Want This →',
+            'pricing.p3.name': 'Brand That Converts',
+            'pricing.p3.tagline': 'For those who want the complete sales system.',
+            'pricing.p3.f1': '17 videos/month (12 value + 5 sales)',
+            'pricing.p3.f2': 'Everything in Personal Brand +',
+            'pricing.p3.f3': 'Sales funnels + digital products',
+            'pricing.p3.f4': 'Paid community',
+            'pricing.p3.f5': 'Omnichannel distribution',
+            'pricing.p3.cta': 'Let\'s Talk →',
+            // About
+            'about.badge': '─── About Us',
+            'about.title': 'We\'re Creaitor. And we <span class="italic text-zinc-500">hate</span> generic content.',
+            'about.p1': 'We believe your content can do much more than just look good.',
+            'about.p2': 'We work with professionals who are tired of improvising on social and want to use their content as a real growth tool.',
+            'about.p3': 'We don\'t sell magic formulas. We don\'t promise virality. What we do: listen to you, understand your business, and build a content strategy with you that attracts the right clients.',
+            'about.p4': 'While you focus on closing deals, we make sure clients come to you.',
+            'about.signature': '— The Creaitor team',
+            // FAQ
+            'faq.badge': 'FAQs',
+            'faq.title': 'Frequently <span class="italic text-zinc-500">Asked Questions</span>',
+            'faq.cta': 'Book your free consultation →',
+            'faq.q1': 'How long does it take to see results?',
+            'faq.q2': 'Do I need a big following to start?',
+            'faq.q3': 'What if I already have a content team?',
+            'faq.q4': 'Do you film the videos or do I?',
+            'faq.q5': 'What does AI automation include?',
+            // Final CTA
+            'finalcta.title': 'Your competition is already creating content that <span class="italic text-zinc-500">sells.</span>',
+            'finalcta.question': 'Are you going to keep waiting?',
+            'finalcta.btn': 'Book a Free Consultation →',
+            'finalcta.note': '30 minutes. No commitment. We\'ll show you exactly how to turn your content into sales.',
+            // Footer
+            'footer.copyright': '© 2026 Creaitor Studio. All rights reserved.',
+            'footer.tagline': 'Made with strategy, coffee and zero generic templates.',
+        }
+    };
+
+    function setLanguage(lang) {
+        if (!I18N[lang]) lang = 'es';
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const value = I18N[lang][key];
+            if (value === undefined) return;
+            if (el.tagName === 'TITLE') {
+                document.title = value;
+            } else {
+                el.innerHTML = value;
+            }
+        });
+        // Update active toggle button state
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            if (btn.dataset.lang === lang) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        try { localStorage.setItem('creaitor_lang', lang); } catch (e) {}
+    }
+
+    // Initialize on load + bind toggle clicks
+    (function initI18n() {
+        let saved = 'es';
+        try { saved = localStorage.getItem('creaitor_lang') || 'es'; } catch (e) {}
+        setLanguage(saved);
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+    })();
+
     // Intro splash — typewriter effect
     (function() {
         const text = 'CREAITOR';
@@ -1178,9 +1548,9 @@ transform: scaleY(1);
                 const num = circle.querySelector('span');
                 if (i === index) {
                     step.style.opacity = '1';
-                    circle.style.borderColor = '#fbbf24';
-                    circle.style.backgroundColor = '#fbbf24';
-                    num.style.color = '#09090b';
+                    circle.style.borderColor = '#C08A30';
+                    circle.style.backgroundColor = '#C08A30';
+                    num.style.color = '#07283B';
                     num.textContent = '✓';
                 } else if (i < index) {
                     step.style.opacity = '0.5';
@@ -1479,10 +1849,10 @@ transform: scaleY(1);
                     const id = entry.target.id;
                     navLinks.forEach(link => {
                         if (link.getAttribute('href') === '#' + id) {
-                            link.classList.add('text-zinc-900', 'bg-zinc-100/60');
+                            link.classList.add('text-creaitor-navy', 'bg-zinc-100/60');
                             link.classList.remove('text-zinc-500');
                         } else {
-                            link.classList.remove('text-zinc-900', 'bg-zinc-100/60');
+                            link.classList.remove('text-creaitor-navy', 'bg-zinc-100/60');
                             link.classList.add('text-zinc-500');
                         }
                     });
