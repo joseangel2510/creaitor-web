@@ -44,6 +44,14 @@ width: max-content;
 .animate-marquee:hover {
 animation-play-state: paused;
 }
+.animate-marquee-slow {
+animation: marquee 50s linear infinite;
+display: flex;
+width: max-content;
+}
+.animate-marquee-slow:hover {
+animation-play-state: paused;
+}
 .mask-edges {
 mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
@@ -928,51 +936,92 @@ box-shadow: 0 2px 8px -2px rgba(7,40,59,0.3);
                 </h2>
             </div>
 
-            <!-- Testimonials Scroll -->
-            <div class="w-full max-w-6xl mb-32 overflow-x-auto hide-scrollbar snap-x snap-mandatory flex gap-4 md:gap-6 pb-8 mask-edges">
-                <!-- Testimonial 1 -->
-                <div class="min-w-[280px] md:min-w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 snap-center shrink-0">
-                    <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-zinc-500"></iconify-icon>
-                    <p data-i18n="testimonials.t1.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
-                        Antes publicaba sin rumbo. Ahora cada video me trae leads calificados directo al DM. En 60 días tripliqué mis consultas.
-                    </p>
-                    <div class="flex items-center gap-4 mt-auto">
-                        <img src="https://framerusercontent.com/images/DcNJgQIOkkv7HpGnt8XS2UJ0sGE.png?scale-down-to=512" alt="María" class="w-12 h-12 rounded-full object-cover">
-                        <div>
-                            <div class="font-medium text-sm">María López</div>
-                            <div data-i18n="testimonials.t1.role" class="text-xs text-zinc-500">Coach de Negocios</div>
+            <!-- Testimonials Marquee -->
+            <div class="w-full mb-32 overflow-hidden mask-edges">
+                <div class="animate-marquee-slow gap-6 py-4 items-stretch">
+                    <!-- Testimonial 1 -->
+                    <div class="w-[300px] md:w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 shrink-0">
+                        <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-creaitor-ochre/70"></iconify-icon>
+                        <p data-i18n="testimonials.t1.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                            Antes publicaba sin rumbo. Ahora cada video me trae leads calificados directo al DM. En 60 días tripliqué mis consultas.
+                        </p>
+                        <div class="flex items-center gap-4 mt-auto">
+                            <img src="https://framerusercontent.com/images/DcNJgQIOkkv7HpGnt8XS2UJ0sGE.png?scale-down-to=512" alt="María" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <div class="font-medium text-sm">María López</div>
+                                <div data-i18n="testimonials.t1.role" class="text-xs text-zinc-500">Coach de Negocios</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="w-[300px] md:w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 shrink-0">
+                        <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-creaitor-ochre/70"></iconify-icon>
+                        <p data-i18n="testimonials.t2.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                            La automatización cambió todo. Mi sistema de captación trabaja solo y yo me dedico a cerrar. Creaitor entiende lo que necesitas antes de que lo expliques.
+                        </p>
+                        <div class="flex items-center gap-4 mt-auto">
+                            <img src="https://framerusercontent.com/images/deHueM6CDFRvwo3KoYL9UlkKjo.png?scale-down-to=512" alt="Carlos" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <div class="font-medium text-sm">Carlos Méndez</div>
+                                <div data-i18n="testimonials.t2.role" class="text-xs text-zinc-500">Fundador, Méndez Consulting</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="w-[300px] md:w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 shrink-0">
+                        <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-creaitor-ochre/70"></iconify-icon>
+                        <p data-i18n="testimonials.t3.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                            Proceso limpio, calidad cinematográfica y sin vueltas. Es como tener un equipo completo de marketing por una fracción del costo.
+                        </p>
+                        <div class="flex items-center gap-4 mt-auto">
+                            <img src="https://framerusercontent.com/images/KsgfJQmkr2IUJ4C1etP8vC5ywSU.png?scale-down-to=512" alt="Ana" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <div class="font-medium text-sm">Ana Rodríguez</div>
+                                <div data-i18n="testimonials.t3.role" class="text-xs text-zinc-500">CEO, FitBrand Studio</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Duplicates for seamless infinite loop -->
+                    <div class="w-[300px] md:w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 shrink-0" aria-hidden="true">
+                        <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-creaitor-ochre/70"></iconify-icon>
+                        <p data-i18n="testimonials.t1.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                            Antes publicaba sin rumbo. Ahora cada video me trae leads calificados directo al DM. En 60 días tripliqué mis consultas.
+                        </p>
+                        <div class="flex items-center gap-4 mt-auto">
+                            <img src="https://framerusercontent.com/images/DcNJgQIOkkv7HpGnt8XS2UJ0sGE.png?scale-down-to=512" alt="" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <div class="font-medium text-sm">María López</div>
+                                <div data-i18n="testimonials.t1.role" class="text-xs text-zinc-500">Coach de Negocios</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-[300px] md:w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 shrink-0" aria-hidden="true">
+                        <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-creaitor-ochre/70"></iconify-icon>
+                        <p data-i18n="testimonials.t2.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                            La automatización cambió todo. Mi sistema de captación trabaja solo y yo me dedico a cerrar. Creaitor entiende lo que necesitas antes de que lo expliques.
+                        </p>
+                        <div class="flex items-center gap-4 mt-auto">
+                            <img src="https://framerusercontent.com/images/deHueM6CDFRvwo3KoYL9UlkKjo.png?scale-down-to=512" alt="" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <div class="font-medium text-sm">Carlos Méndez</div>
+                                <div data-i18n="testimonials.t2.role" class="text-xs text-zinc-500">Fundador, Méndez Consulting</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-[300px] md:w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 shrink-0" aria-hidden="true">
+                        <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-creaitor-ochre/70"></iconify-icon>
+                        <p data-i18n="testimonials.t3.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
+                            Proceso limpio, calidad cinematográfica y sin vueltas. Es como tener un equipo completo de marketing por una fracción del costo.
+                        </p>
+                        <div class="flex items-center gap-4 mt-auto">
+                            <img src="https://framerusercontent.com/images/KsgfJQmkr2IUJ4C1etP8vC5ywSU.png?scale-down-to=512" alt="" class="w-12 h-12 rounded-full object-cover">
+                            <div>
+                                <div class="font-medium text-sm">Ana Rodríguez</div>
+                                <div data-i18n="testimonials.t3.role" class="text-xs text-zinc-500">CEO, FitBrand Studio</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Testimonial 2 -->
-                <div class="min-w-[320px] md:min-w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 snap-center shrink-0">
-                    <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-zinc-500"></iconify-icon>
-                    <p data-i18n="testimonials.t2.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
-                        La automatización cambió todo. Mi sistema de captación trabaja solo y yo me dedico a cerrar. Creaitor entiende lo que necesitas antes de que lo expliques.
-                    </p>
-                    <div class="flex items-center gap-4 mt-auto">
-                        <img src="https://framerusercontent.com/images/deHueM6CDFRvwo3KoYL9UlkKjo.png?scale-down-to=512" alt="Carlos" class="w-12 h-12 rounded-full object-cover">
-                        <div>
-                            <div class="font-medium text-sm">Carlos Méndez</div>
-                            <div data-i18n="testimonials.t2.role" class="text-xs text-zinc-500">Fundador, Méndez Consulting</div>
-                        </div>
-                    </div>
-                </div>
-                 <!-- Testimonial 3 -->
-                 <div class="min-w-[320px] md:min-w-[400px] bg-zinc-800/50 border border-zinc-700 rounded-3xl p-8 flex flex-col gap-6 snap-center shrink-0">
-                    <iconify-icon icon="solar:quote-left-linear" class="text-3xl text-zinc-500"></iconify-icon>
-                    <p data-i18n="testimonials.t3.quote" class="text-sm font-normal leading-relaxed text-zinc-300 flex-grow">
-                        Proceso limpio, calidad cinematográfica y sin vueltas. Es como tener un equipo completo de marketing por una fracción del costo.
-                    </p>
-                    <div class="flex items-center gap-4 mt-auto">
-                        <img src="https://framerusercontent.com/images/KsgfJQmkr2IUJ4C1etP8vC5ywSU.png?scale-down-to=512" alt="Ana" class="w-12 h-12 rounded-full object-cover">
-                        <div>
-                            <div class="font-medium text-sm">Ana Rodríguez</div>
-                            <div data-i18n="testimonials.t3.role" class="text-xs text-zinc-500">CEO, FitBrand Studio</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="min-w-[10vw] shrink-0 opacity-0"></div>
             </div>
 
             <!-- Pricing Section - 3 Plans -->
