@@ -189,6 +189,14 @@ background: #07283B;
 color: #fff;
 box-shadow: 0 2px 8px -2px rgba(7,40,59,0.3);
 }
+
+/* FAQ accordion */
+.faq-item summary { list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item .faq-icon { transition: transform 0.35s ease, background 0.35s ease, color 0.35s ease, border-color 0.35s ease; }
+.faq-item[open] .faq-icon { transform: rotate(45deg); background: #07283B; color: #fff; border-color: #07283B; }
+.faq-item .faq-answer { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease; }
+.faq-item[open] .faq-answer { max-height: 600px; opacity: 1; }
 </style>
 </head>
 <body class="bg-creaitor-beige text-creaitor-navy font-sans antialiased min-h-screen flex flex-col relative selection:bg-zinc-200 selection:text-black loading overflow-x-hidden">
@@ -1114,36 +1122,61 @@ box-shadow: 0 2px 8px -2px rgba(7,40,59,0.3);
 
                 <!-- FAQ Items -->
                 <div class="w-full md:w-2/3 flex flex-col gap-2">
-                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span data-i18n="faq.q1" class="text-sm md:text-base font-medium text-creaitor-navy">¿Cuánto tiempo toma ver resultados?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
-                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                    <details class="faq-item bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl">
+                        <summary class="cursor-pointer p-6 flex items-center justify-between gap-4">
+                            <span data-i18n="faq.q1" class="text-sm md:text-base font-medium text-creaitor-navy">¿Cuánto tiempo toma ver resultados?</span>
+                            <div class="faq-icon shrink-0 w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500">
+                                <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                            </div>
+                        </summary>
+                        <div class="faq-answer">
+                            <p data-i18n="faq.a1" class="px-6 pb-6 text-sm md:text-[15px] leading-relaxed text-zinc-600">Las primeras señales (más alcance, comentarios cualificados, DMs reales) aparecen en los primeros 30 días. Los resultados que importan —leads recurrentes y ventas atribuibles al contenido— suelen llegar entre el día 60 y 90, cuando el algoritmo aprende a quién mostrarte y la automatización empieza a nutrir prospectos. No prometemos virales, prometemos un sistema que crece compuesto.</p>
                         </div>
-                    </div>
-                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span data-i18n="faq.q2" class="text-sm md:text-base font-medium text-creaitor-navy">¿Necesito tener muchos seguidores para empezar?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
-                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                    </details>
+                    <details class="faq-item bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl">
+                        <summary class="cursor-pointer p-6 flex items-center justify-between gap-4">
+                            <span data-i18n="faq.q2" class="text-sm md:text-base font-medium text-creaitor-navy">¿Necesito tener muchos seguidores para empezar?</span>
+                            <div class="faq-icon shrink-0 w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500">
+                                <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                            </div>
+                        </summary>
+                        <div class="faq-answer">
+                            <p data-i18n="faq.a2" class="px-6 pb-6 text-sm md:text-[15px] leading-relaxed text-zinc-600">No. La mayoría de nuestros clientes empiezan con menos de 1.000 seguidores. Lo que vende no es el tamaño de la audiencia, es la precisión: contenido bien dirigido + automatización convierte 100 seguidores correctos en más ventas que 10.000 que jamás te van a comprar. Empezamos por construir la audiencia adecuada, no la más grande.</p>
                         </div>
-                    </div>
-                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span data-i18n="faq.q3" class="text-sm md:text-base font-medium text-creaitor-navy">¿Qué pasa si ya tengo un equipo de contenido?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
-                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                    </details>
+                    <details class="faq-item bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl">
+                        <summary class="cursor-pointer p-6 flex items-center justify-between gap-4">
+                            <span data-i18n="faq.q3" class="text-sm md:text-base font-medium text-creaitor-navy">¿Qué pasa si ya tengo un equipo de contenido?</span>
+                            <div class="faq-icon shrink-0 w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500">
+                                <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                            </div>
+                        </summary>
+                        <div class="faq-answer">
+                            <p data-i18n="faq.a3" class="px-6 pb-6 text-sm md:text-[15px] leading-relaxed text-zinc-600">Nos integramos, no te reemplazamos. Trabajamos junto a tu equipo aportando exactamente lo que les falta: estrategia, automatización con IA, embudos de venta o producción cinematográfica. En la primera llamada hacemos un diagnóstico gratuito para ver dónde sumamos sin pisar lo que ya funciona.</p>
                         </div>
-                    </div>
-                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span data-i18n="faq.q4" class="text-sm md:text-base font-medium text-creaitor-navy">¿Los videos los graban ustedes o yo?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
-                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                    </details>
+                    <details class="faq-item bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl">
+                        <summary class="cursor-pointer p-6 flex items-center justify-between gap-4">
+                            <span data-i18n="faq.q4" class="text-sm md:text-base font-medium text-creaitor-navy">¿Los videos los graban ustedes o yo?</span>
+                            <div class="faq-icon shrink-0 w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500">
+                                <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                            </div>
+                        </summary>
+                        <div class="faq-answer">
+                            <p data-i18n="faq.a4" class="px-6 pb-6 text-sm md:text-[15px] leading-relaxed text-zinc-600">Las dos opciones funcionan. Si estás cerca, vamos a tu espacio o a estudio con equipo cinematográfico completo (cámaras, luces, audio, dirección). Si estás fuera, te enviamos guion + dirección remota y editamos profesionalmente lo que grabes con tu celular o cámara. La calidad final es indistinguible — lo que cambia es solo el flujo de producción.</p>
                         </div>
-                    </div>
-                    <div class="group bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl p-6 cursor-pointer flex items-center justify-between">
-                        <span data-i18n="faq.q5" class="text-sm md:text-base font-medium text-creaitor-navy">¿Qué incluye la automatización con IA?</span>
-                        <div class="w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 group-hover:text-creaitor-navy transition-colors">
-                            <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                    </details>
+                    <details class="faq-item bg-creaitor-beige hover:bg-zinc-100/80 transition-colors rounded-2xl">
+                        <summary class="cursor-pointer p-6 flex items-center justify-between gap-4">
+                            <span data-i18n="faq.q5" class="text-sm md:text-base font-medium text-creaitor-navy">¿Qué incluye la automatización con IA?</span>
+                            <div class="faq-icon shrink-0 w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500">
+                                <iconify-icon icon="solar:add-circle-linear" class="text-lg"></iconify-icon>
+                            </div>
+                        </summary>
+                        <div class="faq-answer">
+                            <p data-i18n="faq.a5" class="px-6 pb-6 text-sm md:text-[15px] leading-relaxed text-zinc-600">Tres capas trabajando 24/7: (1) chatbots y respuestas automáticas en DM, Instagram y WhatsApp que califican leads sin que muevas un dedo; (2) secuencias de email/WhatsApp que nutren prospectos hasta el cierre; (3) un CRM ligero que centraliza todo y te dice exactamente quién está listo para comprar. Configurado a tu marca y a tu tono — no parece un bot, parece tú en tu mejor día.</p>
                         </div>
-                    </div>
+                    </details>
                 </div>
             </div>
         </section>
@@ -1323,10 +1356,15 @@ box-shadow: 0 2px 8px -2px rgba(7,40,59,0.3);
             'faq.title': 'Preguntas <span class="italic text-creaitor-ochre">Frecuentes</span>',
             'faq.cta': 'Agenda tu asesoría gratuita →',
             'faq.q1': '¿Cuánto tiempo toma ver resultados?',
+            'faq.a1': 'Las primeras señales (más alcance, comentarios cualificados, DMs reales) aparecen en los primeros 30 días. Los resultados que importan —leads recurrentes y ventas atribuibles al contenido— suelen llegar entre el día 60 y 90, cuando el algoritmo aprende a quién mostrarte y la automatización empieza a nutrir prospectos. No prometemos virales, prometemos un sistema que crece compuesto.',
             'faq.q2': '¿Necesito tener muchos seguidores para empezar?',
+            'faq.a2': 'No. La mayoría de nuestros clientes empiezan con menos de 1.000 seguidores. Lo que vende no es el tamaño de la audiencia, es la precisión: contenido bien dirigido + automatización convierte 100 seguidores correctos en más ventas que 10.000 que jamás te van a comprar. Empezamos por construir la audiencia adecuada, no la más grande.',
             'faq.q3': '¿Qué pasa si ya tengo un equipo de contenido?',
+            'faq.a3': 'Nos integramos, no te reemplazamos. Trabajamos junto a tu equipo aportando exactamente lo que les falta: estrategia, automatización con IA, embudos de venta o producción cinematográfica. En la primera llamada hacemos un diagnóstico gratuito para ver dónde sumamos sin pisar lo que ya funciona.',
             'faq.q4': '¿Los videos los graban ustedes o yo?',
+            'faq.a4': 'Las dos opciones funcionan. Si estás cerca, vamos a tu espacio o a estudio con equipo cinematográfico completo (cámaras, luces, audio, dirección). Si estás fuera, te enviamos guion + dirección remota y editamos profesionalmente lo que grabes con tu celular o cámara. La calidad final es indistinguible — lo que cambia es solo el flujo de producción.',
             'faq.q5': '¿Qué incluye la automatización con IA?',
+            'faq.a5': 'Tres capas trabajando 24/7: (1) chatbots y respuestas automáticas en DM, Instagram y WhatsApp que califican leads sin que muevas un dedo; (2) secuencias de email/WhatsApp que nutren prospectos hasta el cierre; (3) un CRM ligero que centraliza todo y te dice exactamente quién está listo para comprar. Configurado a tu marca y a tu tono — no parece un bot, parece tú en tu mejor día.',
             // Final CTA
             'finalcta.title': 'Tu competencia ya está creando contenido que <span class="italic text-creaitor-ochre">vende.</span>',
             'finalcta.question': '¿Vas a seguir esperando?',
@@ -1464,10 +1502,15 @@ box-shadow: 0 2px 8px -2px rgba(7,40,59,0.3);
             'faq.title': 'Frequently <span class="italic text-creaitor-ochre">Asked Questions</span>',
             'faq.cta': 'Book your free consultation →',
             'faq.q1': 'How long does it take to see results?',
+            'faq.a1': 'First signals (more reach, qualified comments, real DMs) show up within the first 30 days. The results that actually matter — recurring leads and content-attributable sales — usually arrive between day 60 and 90, once the algorithm learns who to show you to and the automation starts nurturing prospects. We don\'t promise viral, we promise a system that compounds.',
             'faq.q2': 'Do I need a big following to start?',
+            'faq.a2': 'No. Most of our clients start with under 1,000 followers. What sells isn\'t audience size, it\'s precision: well-targeted content + automation converts 100 right followers into more sales than 10,000 who would never buy from you. We start by building the right audience, not the biggest one.',
             'faq.q3': 'What if I already have a content team?',
+            'faq.a3': 'We integrate, we don\'t replace. We work alongside your team filling exactly the gap that exists: strategy, AI automation, sales funnels or cinematic production. On the first call we run a free diagnosis to see where we add value without disrupting what already works.',
             'faq.q4': 'Do you film the videos or do I?',
+            'faq.a4': 'Both work. If you\'re nearby, we come to your space or to a studio with full cinematic gear (cameras, lighting, audio, directing). If you\'re remote, we send you a script + remote direction and professionally edit whatever you record on your phone or camera. The final quality is indistinguishable — only the production flow changes.',
             'faq.q5': 'What does AI automation include?',
+            'faq.a5': 'Three layers running 24/7: (1) chatbots and automated replies on DM, Instagram and WhatsApp that qualify leads without you lifting a finger; (2) email/WhatsApp sequences that nurture prospects to close; (3) a lightweight CRM that centralizes everything and tells you exactly who is ready to buy. Configured to your brand and tone — it doesn\'t sound like a bot, it sounds like you on your best day.',
             // Final CTA
             'finalcta.title': 'Your competition is already creating content that <span class="italic text-creaitor-ochre">sells.</span>',
             'finalcta.question': 'Are you going to keep waiting?',
