@@ -2,7 +2,7 @@
 <html lang="es" class="scroll-smooth"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="meta.title">Creaitor Studio — Tu Contenido Debería Vender Por Ti</title>
-<link rel="icon" type="image/png" href="brand_assets/Ocre clean.png">
+<link rel="icon" type="image/png" href="brand_assets/logo-cropped.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -207,7 +207,7 @@ box-shadow: 0 2px 8px -2px rgba(7,40,59,0.3);
         <nav class="w-full max-w-5xl pointer-events-auto bg-white/70 backdrop-blur-xl border border-zinc-200/60 rounded-2xl shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06)] px-5 py-2.5 flex items-center justify-between transition-all duration-500" id="nav-bar">
             <!-- Logo -->
             <a href="#" class="flex items-center shrink-0" aria-label="CREAITOR">
-                <img src="brand_assets/Ocre clean.png" alt="CREAITOR" class="h-8 md:h-9 w-auto">
+                <img src="brand_assets/logo-cropped.png" alt="CREAITOR" class="h-7 md:h-8 w-auto">
             </a>
 
             <!-- Desktop Links -->
@@ -1143,16 +1143,24 @@ box-shadow: 0 2px 8px -2px rgba(7,40,59,0.3);
         </section>
 
         <!-- SECCIÓN 10: CTA FINAL -->
-        <section id="contacto" class="w-full py-24 md:py-32 px-6 flex flex-col items-center text-center bg-creaitor-beige border-t border-zinc-100">
-            <div class="max-w-2xl flex flex-col items-center gap-8">
-                <h2 data-i18n="finalcta.title" class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-creaitor-navy leading-[1.1]">
-                    Tu competencia ya está creando contenido que <span class="italic text-zinc-500">vende.</span>
+        <section id="contacto" class="relative w-full py-32 md:py-44 px-6 flex flex-col items-center text-center overflow-hidden">
+            <!-- Background studio image -->
+            <img src="media/studio-bg.png" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover -z-10">
+            <!-- Brand gradient overlay for legibility -->
+            <div class="absolute inset-0 -z-10 bg-gradient-to-br from-creaitor-navy/85 via-creaitor-navy/75 to-creaitor-navy-dark/90"></div>
+            <!-- Subtle ochre glow accent -->
+            <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-creaitor-ochre/20 blur-3xl -z-10 pointer-events-none"></div>
+            <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-creaitor-ochre/10 blur-3xl -z-10 pointer-events-none"></div>
+
+            <div class="max-w-2xl flex flex-col items-center gap-8 relative">
+                <h2 data-i18n="finalcta.title" class="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-white leading-[1.1] drop-shadow-lg">
+                    Tu competencia ya está creando contenido que <span class="italic text-creaitor-ochre">vende.</span>
                 </h2>
-                <p data-i18n="finalcta.question" class="text-xl font-medium text-zinc-500">¿Vas a seguir esperando?</p>
-                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" data-i18n="finalcta.btn" class="bg-creaitor-navy hover:bg-creaitor-navy-light text-white transition-colors rounded-full py-4 px-8 text-base font-medium">
+                <p data-i18n="finalcta.question" class="text-xl font-medium text-zinc-200">¿Vas a seguir esperando?</p>
+                <a href="https://api.leadconnectorhq.com/widget/booking/4dhzO2WRJd5JEAgmHQ56" target="_blank" data-i18n="finalcta.btn" class="relative group bg-creaitor-ochre hover:bg-creaitor-ochre-light text-creaitor-navy transition-all duration-300 rounded-full py-4 px-8 text-base font-semibold shadow-[0_8px_32px_-8px_rgba(192,138,48,0.6)] hover:shadow-[0_12px_40px_-8px_rgba(192,138,48,0.8)] hover:-translate-y-0.5">
                     Agendar Asesoría Gratuita →
                 </a>
-                <p data-i18n="finalcta.note" class="text-sm font-normal text-zinc-400 max-w-sm leading-relaxed">
+                <p data-i18n="finalcta.note" class="text-sm font-normal text-zinc-300 max-w-sm leading-relaxed">
                     30 minutos. Sin compromiso. Te mostramos exactamente cómo transformar tu contenido en ventas.
                 </p>
             </div>
@@ -1164,7 +1172,7 @@ box-shadow: 0 2px 8px -2px rgba(7,40,59,0.3);
     <footer class="w-full px-6 py-12 bg-white border-t border-zinc-100">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
             <a href="#" class="flex items-center shrink-0" aria-label="CREAITOR">
-                <img src="brand_assets/Ocre clean.png" alt="CREAITOR" class="h-10 md:h-12 w-auto">
+                <img src="brand_assets/logo-cropped.png" alt="CREAITOR" class="h-9 md:h-11 w-auto">
             </a>
 
             <div class="flex items-center gap-5 md:gap-8 flex-wrap justify-center">
